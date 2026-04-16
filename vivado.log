@@ -1,0 +1,16 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Thu Apr 16 17:22:54 2026
+# Process ID: 8967
+# Current directory: /home/t-kudimov/temp/matmodel
+# Command line: vivado -mode batch -source scripts/create_project.tcl из корня vkr_sync_hdl/
+# Log file: /home/t-kudimov/temp/matmodel/vivado.log
+# Journal file: /home/t-kudimov/temp/matmodel/vivado.jou
+# Running On: PC105355, OS: Linux, CPU Frequency: 4589.205 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+#-----------------------------------------------------------
+source scripts/create_project.tcl
+couldn't read file "scripts/create_project.tcl": no such file or directory
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 16 17:22:56 2026...

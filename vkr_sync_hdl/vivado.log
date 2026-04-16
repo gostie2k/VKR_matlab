@@ -1,0 +1,38 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Thu Apr 16 17:37:50 2026
+# Process ID: 12056
+# Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl
+# Command line: vivado -mode batch -source scripts/create_project.tcl
+# Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.log
+# Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.jou
+# Running On: PC105355, OS: Linux, CPU Frequency: 4373.436 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+#-----------------------------------------------------------
+source scripts/create_project.tcl
+# set proj_name "sync_farrow_parab"
+# set proj_dir  "./vivado_prj"
+# set part      "xc7z020clg484-1"
+# if {[file exists $proj_dir]} {
+#     file delete -force $proj_dir
+# }
+# create_project $proj_name $proj_dir -part $part -force
+# add_files -norecurse [glob ./rtl/*.v]
+# set_property file_type SystemVerilog [get_files ./rtl/sync_farrow_parab.v]
+# add_files -fileset sim_1 -norecurse ./sim/tb_sync_farrow_parab.v
+# set xsim_path "$proj_dir/${proj_name}.sim/sim_1/behav/xsim"
+# file mkdir $xsim_path
+# file copy -force ./sim/stim_i.hex  $proj_dir/sync_farrow_parab.sim/sim_1/behav/xsim/
+# file copy -force ./sim/stim_q.hex  $proj_dir/sync_farrow_parab.sim/sim_1/behav/xsim/
+# file copy -force ./sim/stim_mu.hex $proj_dir/sync_farrow_parab.sim/sim_1/behav/xsim/
+# add_files -fileset constrs_1 -norecurse ./constraints/sync_farrow_parab_ooc.xdc
+# set_property used_in_synthesis true  [get_files sync_farrow_parab_ooc.xdc]
+# set_property used_in_implementation false [get_files sync_farrow_parab_ooc.xdc]
+# set_property top sync_farrow_parab [current_fileset]
+# set_property top tb_sync_farrow_parab [get_filesets sim_1]
+# create_run -name synth_ooc -flow {Vivado Synthesis 2023} \
+#     -part $part -constrset constrs_1 -parent_run synth_1 2>&1
+ERROR: [Common 17-158] 'name' can only be specified once.
+INFO: [Common 17-206] Exiting Vivado at Thu Apr 16 17:37:55 2026...

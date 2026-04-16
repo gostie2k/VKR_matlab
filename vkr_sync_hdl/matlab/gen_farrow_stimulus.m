@@ -131,8 +131,11 @@ for n = 1:N
     if valid_r1
         % Ступень 2: t = v2 · μ + v1, полная точность
         mu_sgn = mu_r1;  % Q0.W_MU как беззнаковое → знаковое с MSB = 0
-        t_new_i = v2_r_i * mu_sgn + bitshift(v1_r_i, W_MU);
-        t_new_q = v2_r_q * mu_sgn + bitshift(v1_r_q, W_MU);
+        
+        t_new_i = v2_r_i * mu_sgn + bitshift(int64(v1_r_i), W_MU);
+        %t_new_i = v2_r_i * mu_sgn + bitshift(v1_r_i, W_MU);
+        %t_new_q = v2_r_q * mu_sgn + bitshift(v1_r_q, W_MU);
+        t_new_q = v2_r_q * mu_sgn + bitshift(int64(v1_r_q), W_MU);
         v0_r2_new_i = v0_r_i;
         v0_r2_new_q = v0_r_q;
         mu_r2_new = mu_r1;
