@@ -3,36 +3,203 @@
 # SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
 # IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
 # SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
-# Start of session at: Thu Apr 16 17:37:50 2026
-# Process ID: 12056
+# Start of session at: Fri Apr 17 10:55:42 2026
+# Process ID: 65027
 # Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl
-# Command line: vivado -mode batch -source scripts/create_project.tcl
+# Command line: vivado vivado_prj/sync_farrow_parab.xpr
 # Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.log
 # Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.jou
-# Running On: PC105355, OS: Linux, CPU Frequency: 4373.436 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+# Running On: PC105355, OS: Linux, CPU Frequency: 4501.511 MHz, CPU Physical cores: 10, Host memory: 33423 MB
 #-----------------------------------------------------------
-source scripts/create_project.tcl
-# set proj_name "sync_farrow_parab"
-# set proj_dir  "./vivado_prj"
-# set part      "xc7z020clg484-1"
-# if {[file exists $proj_dir]} {
-#     file delete -force $proj_dir
+start_gui
+open_project vivado_prj/sync_farrow_parab.xpr
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.0 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.0/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es:part0:1.1 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_a/1.1/board.xml as part xcve2802-vsvh1760-2lp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.0 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.0/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vek280_es_revb:part0:1.1 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vek280/es/rev_b/1.1/board.xml as part xcve2802-vsvh1760-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.0 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.0/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:vhk158_es:part0:1.1 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/vhk158/es/1.1/board.xml as part xcvh1582-vsva3697-2mp-e-s-es1 specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu208ld:part0:2.0 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu208ld/production/2.0/board.xml as part xczu58dr-fsvg1517-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu216ld:part0:2.0 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu216ld/production/2.0/board.xml as part xczu59dr-ffvf1760-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670:part0:2.0 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670/2.0/board.xml as part xczu67dr-fsve1156-2-i specified in board_part file is either invalid or not available
+WARNING: [Board 49-26] cannot add Board Part xilinx.com:zcu670ld:part0:1.0 available at /home/t-kudimov/viv/Vivado/2023.2/data/xhub/boards/XilinxBoardStore/boards/Xilinx/zcu670ld/1.0/board.xml as part xczu57dr-fsve1156-2-i specified in board_part file is either invalid or not available
+INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.gen/sources_1'.
+Scanning sources...
+Finished scanning sources
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/home/t-kudimov/viv/Vivado/2023.2/data/ip'.
+update_compile_order -fileset sources_1
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'tb_sync_farrow_parab'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/home/t-kudimov/viv/Vivado/2023.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_sync_farrow_parab' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_sync_farrow_parab_vlog.prj
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_farrow_parab
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_farrow_parab.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_sync_farrow_parab
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_sync_farrow_parab_behav xil_defaultlib.tb_sync_farrow_parab xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2023.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /home/t-kudimov/viv/Vivado/2023.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_sync_farrow_parab_behav xil_defaultlib.tb_sync_farrow_parab xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.sync_farrow_parab_default
+Compiling module xil_defaultlib.tb_sync_farrow_parab
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_sync_farrow_parab_behav
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_sync_farrow_parab_behav -key {Behavioral:sim_1:Functional:tb_sync_farrow_parab} -tclbatch {tb_sync_farrow_parab.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source tb_sync_farrow_parab.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
 # }
-# create_project $proj_name $proj_dir -part $part -force
-# add_files -norecurse [glob ./rtl/*.v]
-# set_property file_type SystemVerilog [get_files ./rtl/sync_farrow_parab.v]
-# add_files -fileset sim_1 -norecurse ./sim/tb_sync_farrow_parab.v
-# set xsim_path "$proj_dir/${proj_name}.sim/sim_1/behav/xsim"
-# file mkdir $xsim_path
-# file copy -force ./sim/stim_i.hex  $proj_dir/sync_farrow_parab.sim/sim_1/behav/xsim/
-# file copy -force ./sim/stim_q.hex  $proj_dir/sync_farrow_parab.sim/sim_1/behav/xsim/
-# file copy -force ./sim/stim_mu.hex $proj_dir/sync_farrow_parab.sim/sim_1/behav/xsim/
-# add_files -fileset constrs_1 -norecurse ./constraints/sync_farrow_parab_ooc.xdc
-# set_property used_in_synthesis true  [get_files sync_farrow_parab_ooc.xdc]
-# set_property used_in_implementation false [get_files sync_farrow_parab_ooc.xdc]
-# set_property top sync_farrow_parab [current_fileset]
-# set_property top tb_sync_farrow_parab [get_filesets sim_1]
-# create_run -name synth_ooc -flow {Vivado Synthesis 2023} \
-#     -part $part -constrset constrs_1 -parent_run synth_1 2>&1
-ERROR: [Common 17-158] 'name' can only be specified once.
-INFO: [Common 17-206] Exiting Vivado at Thu Apr 16 17:37:55 2026...
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_farrow_parab/stim_i" to the wave window because it has 320000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_farrow_parab/stim_q" to the wave window because it has 320000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_farrow_parab/stim_mu" to the wave window because it has 240000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+# run 1000ns
+[tb_sync_farrow_parab] Loaded 800 stimulus samples
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_sync_farrow_parab_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_runs synth_1 -jobs 8
+WARNING: [Vivado 12-7122] Auto Incremental Compile:: No reference checkpoint was found in run synth_1. Auto-incremental flow will not be run, the standard flow will be run instead.
+[Fri Apr 17 11:02:27 2026] Launched synth_1...
+Run output will be captured here: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/synth_1/runme.log
+open_run synth_1 -name synth_1
+Design is defaulting to impl run constrset: constrs_1
+Design is defaulting to synth run part: xc7z020clg484-1
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 8425.598 ; gain = 0.000 ; free physical = 13948 ; free virtual = 33342
+INFO: [Netlist 29-17] Analyzing 48 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2023.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/constraints/sync_farrow_parab_ooc.xdc]
+Finished Parsing XDC File [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/constraints/sync_farrow_parab_ooc.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 8568.180 ; gain = 0.000 ; free physical = 13847 ; free virtual = 33235
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+launch_runs impl_1 -jobs 8
+INFO: [Timing 38-35] Done setting XDC timing constraints.
+INFO: [Timing 38-480] Writing timing data to binary archive.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 9229.219 ; gain = 0.000 ; free physical = 13323 ; free virtual = 32753
+[Fri Apr 17 11:04:09 2026] Launched impl_1...
+Run output will be captured here: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/impl_1/runme.log
+close_design
+open_run impl_1
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13260 ; free virtual = 32751
+INFO: [Netlist 29-17] Analyzing 48 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2023.2
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Read ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13273 ; free virtual = 32764
+INFO: [Timing 38-478] Restoring timing data from binary archive.
+INFO: [Timing 38-479] Binary timing data restore complete.
+INFO: [Project 1-856] Restoring constraints from binary archive.
+INFO: [Project 1-853] Binary constraint restore complete.
+INFO: [Designutils 20-5722] Start Reading Physical Databases.
+Reading placement.
+Read Netlist Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+Reading placer database...
+Read Device Cache: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.01 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+Read PlaceDB: Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+Read PulsedLatchDB: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+Reading routing.
+Read RouteStorage: Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+Read Physdb Files: Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+Restored from archive | CPU: 0.040000 secs | Memory: 0.695892 MB |
+Finished XDEF File Restore: Time (s): cpu = 00:00:00.03 ; elapsed = 00:00:00.03 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 9251.211 ; gain = 0.000 ; free physical = 13253 ; free virtual = 32746
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+CRITICAL WARNING: [Timing 38-282] The design failed to meet the timing requirements. Please see the timing summary report for details on the timing violations.
+close_sim
+INFO: [Simtcl 6-16] Simulation closed
+launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'tb_sync_farrow_parab'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/home/t-kudimov/viv/Vivado/2023.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_sync_farrow_parab' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_sync_farrow_parab_vlog.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_sync_farrow_parab_behav xil_defaultlib.tb_sync_farrow_parab xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2023.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /home/t-kudimov/viv/Vivado/2023.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_sync_farrow_parab_behav xil_defaultlib.tb_sync_farrow_parab xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_sync_farrow_parab_behav -key {Behavioral:sim_1:Functional:tb_sync_farrow_parab} -tclbatch {tb_sync_farrow_parab.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source tb_sync_farrow_parab.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_farrow_parab/stim_i" to the wave window because it has 320000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_farrow_parab/stim_q" to the wave window because it has 320000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_farrow_parab/stim_mu" to the wave window because it has 240000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+# run 1000ns
+[tb_sync_farrow_parab] Loaded 200 stimulus samples
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_sync_farrow_parab_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+add_files -norecurse {/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v /home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_loop_filter_pi.v /home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_mod1_nco.v /home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_ted_gardner.v /home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_agc.v}
+update_compile_order -fileset sources_1

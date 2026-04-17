@@ -1,0 +1,14 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Fri Apr 17 11:04:10 2026
+# Process ID: 66936
+# Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/impl_1
+# Command line: vivado -log sync_farrow_parab.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source sync_farrow_parab.tcl -notrace
+# Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/impl_1/sync_farrow_parab.vdi
+# Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/impl_1/vivado.jou
+# Running On: PC105355, OS: Linux, CPU Frequency: 4501.401 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+#-----------------------------------------------------------
+source sync_farrow_parab.tcl -notrace

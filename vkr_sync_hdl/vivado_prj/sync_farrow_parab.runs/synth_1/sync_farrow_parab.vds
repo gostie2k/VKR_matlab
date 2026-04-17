@@ -1,0 +1,283 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Fri Apr 17 11:02:29 2026
+# Process ID: 66418
+# Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/synth_1
+# Command line: vivado -log sync_farrow_parab.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source sync_farrow_parab.tcl
+# Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/synth_1/sync_farrow_parab.vds
+# Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/synth_1/vivado.jou
+# Running On: PC105355, OS: Linux, CPU Frequency: 4500.000 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+#-----------------------------------------------------------
+source sync_farrow_parab.tcl -notrace
+Command: synth_design -top sync_farrow_parab -part xc7z020clg484-1 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 66444
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2104.668 ; gain = 404.715 ; free physical = 12770 ; free virtual = 32133
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'sync_farrow_parab' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v:32]
+INFO: [Synth 8-6155] done synthesizing module 'sync_farrow_parab' (0#1) [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v:32]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2188.605 ; gain = 488.652 ; free physical = 12663 ; free virtual = 32032
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2206.418 ; gain = 506.465 ; free physical = 12663 ; free virtual = 32031
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 2206.418 ; gain = 506.465 ; free physical = 12663 ; free virtual = 32031
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00 . Memory (MB): peak = 2206.418 ; gain = 0.000 ; free physical = 12663 ; free virtual = 32031
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/constraints/sync_farrow_parab_ooc.xdc]
+Finished Parsing XDC File [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/constraints/sync_farrow_parab_ooc.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2352.168 ; gain = 0.000 ; free physical = 12636 ; free virtual = 32018
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:00.01 ; elapsed = 00:00:00.01 . Memory (MB): peak = 2352.203 ; gain = 0.000 ; free physical = 12636 ; free virtual = 32018
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12640 ; free virtual = 32019
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg484-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12640 ; free virtual = 32019
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12640 ; free virtual = 32019
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12636 ; free virtual = 32017
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   3 Input   46 Bit       Adders := 2     
+	   6 Input   18 Bit       Adders := 2     
+	   5 Input   18 Bit       Adders := 2     
++---Registers : 
+	               32 Bit    Registers := 2     
+	               18 Bit    Registers := 8     
+	               16 Bit    Registers := 8     
+	               12 Bit    Registers := 2     
+	                1 Bit    Registers := 3     
++---Multipliers : 
+	              13x32  Multipliers := 2     
++---Muxes : 
+	   3 Input   16 Bit        Muxes := 2     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+DSP Report: Generating DSP t_full_i, operation Mode is: C+A*B.
+DSP Report: operator t_full_i is absorbed into DSP t_full_i.
+DSP Report: operator v2_mul_mu_i is absorbed into DSP t_full_i.
+DSP Report: Generating DSP t_mul_mu_i, operation Mode is: A*B.
+DSP Report: operator t_mul_mu_i is absorbed into DSP t_mul_mu_i.
+DSP Report: operator t_mul_mu_i is absorbed into DSP t_mul_mu_i.
+DSP Report: Generating DSP t_mul_mu_i, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator t_mul_mu_i is absorbed into DSP t_mul_mu_i.
+DSP Report: operator t_mul_mu_i is absorbed into DSP t_mul_mu_i.
+DSP Report: Generating DSP t_full_q, operation Mode is: C+A*B.
+DSP Report: operator t_full_q is absorbed into DSP t_full_q.
+DSP Report: operator v2_mul_mu_q is absorbed into DSP t_full_q.
+DSP Report: Generating DSP t_mul_mu_q, operation Mode is: A*B.
+DSP Report: operator t_mul_mu_q is absorbed into DSP t_mul_mu_q.
+DSP Report: operator t_mul_mu_q is absorbed into DSP t_mul_mu_q.
+DSP Report: Generating DSP t_mul_mu_q, operation Mode is: (PCIN>>17)+A*B.
+DSP Report: operator t_mul_mu_q is absorbed into DSP t_mul_mu_q.
+DSP Report: operator t_mul_mu_q is absorbed into DSP t_mul_mu_q.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:07 ; elapsed = 00:00:07 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12619 ; free virtual = 32002
+---------------------------------------------------------------------------------
+ Sort Area is  t_mul_mu_i_2 : 0 0 : 2283 4447 : Used 1 time 0
+ Sort Area is  t_mul_mu_i_2 : 0 1 : 2164 4447 : Used 1 time 0
+ Sort Area is  t_mul_mu_q_6 : 0 0 : 2283 4447 : Used 1 time 0
+ Sort Area is  t_mul_mu_q_6 : 0 1 : 2164 4447 : Used 1 time 0
+ Sort Area is  t_full_i_0 : 0 0 : 1744 1744 : Used 1 time 0
+ Sort Area is  t_full_q_5 : 0 0 : 1744 1744 : Used 1 time 0
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++------------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name       | DSP Mapping    | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|sync_farrow_parab | C+A*B          | 18     | 13     | 30     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | A*B            | 18     | 13     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | (PCIN>>17)+A*B | 15     | 13     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | C+A*B          | 18     | 13     | 30     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | A*B            | 18     | 13     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | (PCIN>>17)+A*B | 15     | 13     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++------------------+----------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12614 ; free virtual = 32002
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:10 ; elapsed = 00:00:10 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12614 ; free virtual = 32002
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12614 ; free virtual = 32002
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++------------------+--------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name       | DSP Mapping  | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------------+--------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|sync_farrow_parab | (C+A*B)'     | 30     | 12     | 48     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 1    | 
+|sync_farrow_parab | A*B          | 17     | 12     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | PCIN>>17+A*B | 30     | 12     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | (C+A*B)'     | 30     | 12     | 48     | -      | 32     | 0    | 0    | 0    | -    | -     | 0    | 1    | 
+|sync_farrow_parab | A*B          | 17     | 12     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|sync_farrow_parab | PCIN>>17+A*B | 30     | 12     | -      | -      | 48     | 0    | 0    | -    | -    | -     | 0    | 0    | 
++------------------+--------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+--------+------+
+|      |Cell    |Count |
++------+--------+------+
+|1     |CARRY4  |    42|
+|2     |DSP48E1 |     6|
+|4     |LUT1    |     6|
+|5     |LUT2    |   114|
+|6     |LUT3    |    94|
+|7     |LUT4    |    64|
+|8     |LUT5    |    36|
+|9     |LUT6    |    60|
+|10    |FDCE    |   256|
++------+--------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:12 ; elapsed = 00:00:12 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:11 ; elapsed = 00:00:11 . Memory (MB): peak = 2352.203 ; gain = 506.465 ; free physical = 12611 ; free virtual = 32001
+Synthesis Optimization Complete : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 2352.203 ; gain = 652.250 ; free physical = 12611 ; free virtual = 32001
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:02 ; elapsed = 00:00:00 . Memory (MB): peak = 2352.203 ; gain = 0.000 ; free physical = 12904 ; free virtual = 32294
+INFO: [Netlist 29-17] Analyzing 48 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2352.203 ; gain = 0.000 ; free physical = 12919 ; free virtual = 32309
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: c1f973c2
+INFO: [Common 17-83] Releasing license: Synthesis
+16 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:16 ; elapsed = 00:00:15 . Memory (MB): peak = 2352.203 ; gain = 1012.719 ; free physical = 12919 ; free virtual = 32310
+INFO: [Common 17-2834] synth_design peak Physical Memory [PSS] (MB): overall = 1899.349; main = 1569.224; forked = 380.531
+INFO: [Common 17-2834] synth_design peak Virtual Memory [VSS] (MB): overall = 3313.652; main = 2352.172; forked = 993.496
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 2376.180 ; gain = 0.000 ; free physical = 12919 ; free virtual = 32310
+INFO: [Common 17-1381] The checkpoint '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj/sync_farrow_parab.runs/synth_1/sync_farrow_parab.dcp' has been generated.
+INFO: [runtcl-4] Executing : report_utilization -file sync_farrow_parab_utilization_synth.rpt -pb sync_farrow_parab_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Fri Apr 17 11:02:49 2026...

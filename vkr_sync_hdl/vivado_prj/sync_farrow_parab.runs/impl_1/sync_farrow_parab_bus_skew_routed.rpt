@@ -1,0 +1,16 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
+| Date         : Fri Apr 17 11:04:42 2026
+| Host         : PC105355 running 64-bit Ubuntu 24.04.3 LTS
+| Command      : report_bus_skew -warn_on_violation -file sync_farrow_parab_bus_skew_routed.rpt -pb sync_farrow_parab_bus_skew_routed.pb -rpx sync_farrow_parab_bus_skew_routed.rpx
+| Design       : sync_farrow_parab
+| Device       : 7z020-clg484
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bus Skew Report
+
+No bus skew constraints
+

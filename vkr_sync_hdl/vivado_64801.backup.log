@@ -1,0 +1,44 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Fri Apr 17 10:53:54 2026
+# Process ID: 64801
+# Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl
+# Command line: vivado -mode batch -source scripts/create_project.tcl
+# Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.log
+# Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.jou
+# Running On: PC105355, OS: Linux, CPU Frequency: 800.000 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+#-----------------------------------------------------------
+source scripts/create_project.tcl
+# set proj_name "sync_farrow_parab"
+# set proj_dir  "./vivado_prj"
+# set part      "xc7z020clg484-1"
+# if {[file exists $proj_dir]} {
+#     file delete -force $proj_dir
+# }
+# create_project $proj_name $proj_dir -part $part -force
+# add_files -norecurse [glob ./rtl/*.v]
+# add_files -fileset sim_1 -norecurse ./sim/tb_sync_farrow_parab.v
+# set sim_dir "$proj_dir/$proj_name.sim/sim_1/behav/xsim"
+# file mkdir $sim_dir
+# foreach f {stim_i.hex stim_q.hex stim_mu.hex} {
+#     if {[file exists ./sim/$f]} {
+#         file copy -force ./sim/$f $sim_dir/$f
+#     } else {
+#         puts "WARNING: ./sim/$f not found, skipping"
+#     }
+# }
+# if {[file exists ./constraints/sync_farrow_parab_ooc.xdc]} {
+#     add_files -fileset constrs_1 -norecurse ./constraints/sync_farrow_parab_ooc.xdc
+#     set_property used_in_synthesis true  [get_files sync_farrow_parab_ooc.xdc]
+#     set_property used_in_implementation true [get_files sync_farrow_parab_ooc.xdc]
+# }
+# set_property top sync_farrow_parab [current_fileset]
+# set_property top tb_sync_farrow_parab [get_filesets sim_1]
+# set_property -name {STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS} \
+#     -value {-mode out_of_context} -objects [get_runs synth_1]
+# puts "Project created at $proj_dir"
+Project created at ./vivado_prj
+INFO: [Common 17-206] Exiting Vivado at Fri Apr 17 10:53:59 2026...
