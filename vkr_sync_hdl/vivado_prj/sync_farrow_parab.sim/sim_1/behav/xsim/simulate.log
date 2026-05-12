@@ -1,0 +1,4 @@
+Time resolution is 1 ps
+[tb_sync_farrow_parab] Loaded 200 stimulus samples
+[tb_sync_farrow_parab] Done, output written to out_hdl.txt
+$finish called at time : 3416 ns : File "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_farrow_parab.v" Line 126

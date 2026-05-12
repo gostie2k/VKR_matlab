@@ -1,0 +1,9 @@
+Time resolution is 1 ps
+[Test 1] W = 0.5 (0x8000), expect strobe every 2 clocks
+[Test 1] Strobes: 50 in 100 clocks (expected ~50)
+[Test 2] W = 0.4 (0x6666), expect strobe every ~2.5 clocks
+[Test 2] Strobes: 40 in 100 clocks (expected ~40)
+[Test 3] W = 0.6 (0x999A), expect strobe every ~1.67 clocks
+[Test 3] Strobes: 60 in 100 clocks (expected ~60)
+[tb_sync_mod1_nco] Done
+$finish called at time : 5024 ns : File "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_mod1_nco.v" Line 114

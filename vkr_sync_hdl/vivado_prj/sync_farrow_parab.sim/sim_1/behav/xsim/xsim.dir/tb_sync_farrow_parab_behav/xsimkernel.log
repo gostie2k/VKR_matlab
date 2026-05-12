@@ -1,4 +1,7 @@
-Running: xsim.dir/tb_sync_farrow_parab_behav/xsimk -simmode gui -wdb tb_sync_farrow_parab_behav.wdb -simrunnum 0 -socket 53147
+Running: xsim.dir/tb_sync_farrow_parab_behav/xsimk -simmode gui -wdb tb_sync_farrow_parab_behav.wdb -simrunnum 0 -socket 39145
 Design successfully loaded
 Design Loading Memory Usage: 23804 KB (Peak: 24132 KB)
 Design Loading CPU Usage: 10 ms
+Simulation completed
+Simulation Memory Usage: 109900 KB (Peak: 163072 KB)
+Simulation CPU Usage: 30 ms

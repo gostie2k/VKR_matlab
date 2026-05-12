@@ -1,0 +1,6 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_mod1_nco.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_mod1_nco
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_mod1_nco.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_sync_mod1_nco
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_nco/sync_mod1_nco_test.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
