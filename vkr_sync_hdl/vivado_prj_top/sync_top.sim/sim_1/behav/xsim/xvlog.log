@@ -1,0 +1,16 @@
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_agc.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_agc
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_farrow_parab
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_loop_filter_pi.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_loop_filter_pi
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_mod1_nco.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_mod1_nco
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_ted_gardner.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_ted_gardner
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module sync_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_sync_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl

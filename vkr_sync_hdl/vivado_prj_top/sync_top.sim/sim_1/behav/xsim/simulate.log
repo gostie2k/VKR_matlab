@@ -1,0 +1,4 @@
+Time resolution is 1 ps
+[tb] Starting: 3960 samples
+[tb] Done. Symbols: 1980, Clocks: 3980
+$finish called at time : 63816 ns : File "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_top.v" Line 64

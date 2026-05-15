@@ -1,16 +1,11 @@
-#-----------------------------------------------------------
-# Vivado v2023.2 (64-bit)
-# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
-# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
-# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
-# Start of session at: Thu May 14 11:27:53 2026
-# Process ID: 1922541
-# Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl
-# Command line: vivado -mode batch -source scripts/run_sim_top.tcl
-# Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.log
-# Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.jou
-# Running On: PC105355, OS: Linux, CPU Frequency: 4498.546 MHz, CPU Physical cores: 10, Host memory: 33423 MB
-#-----------------------------------------------------------
+
+****** Vivado v2023.2 (64-bit)
+  **** SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+  **** IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+  **** SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
 source scripts/run_sim_top.tcl
 # open_project ./vivado_prj_top/sync_top.xpr
 INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.gen/sources_1'.

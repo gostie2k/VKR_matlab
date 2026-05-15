@@ -1,0 +1,15 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  \
+"../../../../../rtl/sync_agc.v" \
+"../../../../../rtl/sync_farrow_parab.v" \
+"../../../../../rtl/sync_loop_filter_pi.v" \
+"../../../../../rtl/sync_mod1_nco.v" \
+"../../../../../rtl/sync_ted_gardner.v" \
+"../../../../../rtl/sync_top.v" \
+"../../../../../sim/tb_sync_top.v" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

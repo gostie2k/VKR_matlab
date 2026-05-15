@@ -1,0 +1,12 @@
+0.7
+2020.2
+Oct 13 2023
+20:21:30
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_agc.v,1776414124,verilog,,/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v,,sync_agc,,,,,,,,
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v,1776348743,verilog,,/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_loop_filter_pi.v,,sync_farrow_parab,,,,,,,,
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_loop_filter_pi.v,1776414124,verilog,,/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_mod1_nco.v,,sync_loop_filter_pi,,,,,,,,
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_mod1_nco.v,1778566192,verilog,,/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_ted_gardner.v,,sync_mod1_nco,,,,,,,,
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_ted_gardner.v,1778566192,verilog,,/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v,,sync_ted_gardner,,,,,,,,
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v,1778566192,verilog,,/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_top.v,,sync_top,,,,,,,,
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_top.v,1778566192,verilog,,,,tb_sync_top,,,,,,,,
+/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.sim/sim_1/behav/xsim/glbl.v,1697210495,verilog,,,,glbl,,,,,,,,

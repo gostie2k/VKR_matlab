@@ -3,12 +3,12 @@
 # SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
 # IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
 # SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
-# Start of session at: Tue May 12 16:07:07 2026
-# Process ID: 1087294
+# Start of session at: Wed May 13 09:27:26 2026
+# Process ID: 1426597
 # Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl
-# Command line: vivado -mode batch -source scripts/create_project_nco.tcl
+# Command line: vivado -mode batch -source scripts/create_top.tcl
 # Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.log
 # Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.jou
-# Running On: PC105355, OS: Linux, CPU Frequency: 3668.801 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+# Running On: PC105355, OS: Linux, CPU Frequency: 4215.933 MHz, CPU Physical cores: 10, Host memory: 33423 MB
 #-----------------------------------------------------------
-source scripts/create_project_nco.tcl
+source scripts/create_top.tcl
