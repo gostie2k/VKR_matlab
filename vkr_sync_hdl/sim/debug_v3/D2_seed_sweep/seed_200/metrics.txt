@@ -1,0 +1,21 @@
+=== analyse_v3 ===
+symbols: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D2_seed_sweep/seed_200/sync_out_symbols.txt
+internal: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D2_seed_sweep/seed_200/sync_internal.txt
+N_sym total       = 1980
+N_sym steady      = 1780  (trim=200)
+steady_start_clk  = 2985  (clk_max=3980)
+N strobe steady   = 489
+
+MER               = 12.93 dB
+ideal_mag (med|x|)= 20728
+RMS|x|            = 21109
+phase dev std     = 9.31 deg
+Quadrants (±45/±135) [%]:  Q0=25.5  Q1=24.6  Q2=23.6  Q3=26.3
+
+mu_lock mean      = 3008.5   (ratio=0.7345)
+mu_lock std       = 114.0
+debug_w mean      = 32770.7
+debug_w std       = 103.0
+vi_reg  mean      = -13.44
+vi_reg  std       = 11.23
+|e_out| mean      = 4137

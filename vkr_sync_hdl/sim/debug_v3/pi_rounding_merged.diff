@@ -1,0 +1,19 @@
+diff --git a/vkr_sync_hdl/rtl/sync_loop_filter_pi.v b/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
+index 80651c3..bf6c08e 100644
+--- a/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
++++ b/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
+@@ -55,8 +55,12 @@ wire signed [W_ACC-1:0] vp_full;
+ wire signed [W_ACC-1:0] k2e_full;
+ 
+ // Сдвиг + sign-extension до W_ACC
+-assign vp_full  = {{(W_ACC - W_PROD + SHIFT_P){prod_k1[W_PROD-1]}}, prod_k1[W_PROD-1:SHIFT_P]};
+-assign k2e_full = {{(W_ACC - W_PROD + SHIFT_P){prod_k2[W_PROD-1]}}, prod_k2[W_PROD-1:SHIFT_P]};
++// Округление перед усечением (round-to-nearest), устраняет
++// систематический отрицательный bias арифм. сдвига >>>15
++wire signed [W_PROD-1:0] prod_k1_r = prod_k1 + (1 << 14);
++wire signed [W_PROD-1:0] prod_k2_r = prod_k2 + (1 << 14);
++assign vp_full  = {{(W_ACC - W_PROD + SHIFT_P){prod_k1_r[W_PROD-1]}}, prod_k1_r[W_PROD-1:SHIFT_P]};
++assign k2e_full = {{(W_ACC - W_PROD + SHIFT_P){prod_k2_r[W_PROD-1]}}, prod_k2_r[W_PROD-1:SHIFT_P]};
+ 
+ reg signed [W_ACC-1:0] vp_s1;
+ reg signed [W_ACC-1:0] k2e_s1;

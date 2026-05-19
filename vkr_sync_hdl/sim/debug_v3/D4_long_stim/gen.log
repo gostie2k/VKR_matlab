@@ -1,0 +1,7 @@
+[gen_sync_top_stimulus] Generated 15960 samples (sps_rx=2)
+[gen_sync_top_stimulus] PI coefficients:
+  K1 = -0.019233 → 0xFD8A (Q1.15)
+  K2 = -0.000513 → 0xFFEF (Q1.15)
+  W_nom = 0.5 → 0x8000
+  CLAMP = 0x4000
+  N_samples = 15960 (0x3E58)

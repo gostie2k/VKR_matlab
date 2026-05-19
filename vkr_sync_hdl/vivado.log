@@ -3,13 +3,13 @@
 # SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
 # IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
 # SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
-# Start of session at: Thu May 14 11:27:53 2026
-# Process ID: 1922541
+# Start of session at: Tue May 19 09:40:25 2026
+# Process ID: 22815
 # Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl
 # Command line: vivado -mode batch -source scripts/run_sim_top.tcl
 # Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.log
 # Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.jou
-# Running On: PC105355, OS: Linux, CPU Frequency: 4498.546 MHz, CPU Physical cores: 10, Host memory: 33423 MB
+# Running On: PC105355, OS: Linux, CPU Frequency: 5436.158 MHz, CPU Physical cores: 12, Host memory: 32712 MB
 #-----------------------------------------------------------
 source scripts/run_sim_top.tcl
 # open_project ./vivado_prj_top/sync_top.xpr
@@ -97,7 +97,7 @@ INFO: [USF-XSim-97] XSim simulation ran for 1000ns
 # run all
 [tb] Done. Symbols: 1980, Clocks: 3980
 $finish called at time : 63816 ns : File "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_top.v" Line 64
-# foreach f {sync_out_symbols.txt sync_out_debug.txt} {
+# foreach f {sync_out_symbols.txt sync_out_debug.txt sync_internal.txt} {
 #     if {[file exists $sim_dir/$f]} {
 #         file copy -force $sim_dir/$f ./sim/$f
 #         puts "Result copied to ./sim/$f"
@@ -107,8 +107,9 @@ $finish called at time : 63816 ns : File "/home/t-kudimov/temp/matmodel/vkr_sync
 # }
 Result copied to ./sim/sync_out_symbols.txt
 WARNING: ./vivado_prj_top/sync_top.sim/sim_1/behav/xsim/sync_out_debug.txt не создан тестбенчем.
+Result copied to ./sim/sync_internal.txt
 # close_sim
 INFO: [Simtcl 6-16] Simulation closed
 # puts "sync_top simulation completed."
 sync_top simulation completed.
-INFO: [Common 17-206] Exiting Vivado at Thu May 14 11:28:03 2026...
+INFO: [Common 17-206] Exiting Vivado at Tue May 19 09:40:33 2026...

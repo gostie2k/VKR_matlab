@@ -1,0 +1,26 @@
+==========================================
+[D1] EbN0 = 60 dB
+==========================================
+[D1] EbN0=60 done. Artifacts -> /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D1_ebno_sweep/ebno_60
+==========================================
+[D1] EbN0 = 40 dB
+==========================================
+[D1] EbN0=40 done. Artifacts -> /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D1_ebno_sweep/ebno_40
+==========================================
+[D1] EbN0 = 30 dB
+==========================================
+[D1] EbN0=30 done. Artifacts -> /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D1_ebno_sweep/ebno_30
+==========================================
+[D1] EbN0 = 25 dB
+==========================================
+[D1] EbN0=25 done. Artifacts -> /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D1_ebno_sweep/ebno_25
+==========================================
+[D1] EbN0 = 20 dB
+==========================================
+[D1] EbN0=20 done. Artifacts -> /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D1_ebno_sweep/ebno_20
+==========================================
+[D1] EbN0 = 15 dB
+==========================================
+[D1] EbN0=15 done. Artifacts -> /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D1_ebno_sweep/ebno_15
+[D1] EBN0_DB restored to 20.0
+[D1] sweep complete.

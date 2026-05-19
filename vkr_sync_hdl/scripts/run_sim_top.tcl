@@ -21,7 +21,7 @@ launch_simulation
 run all
 
 # Перенос выходных файлов в ./sim для последующего анализа
-foreach f {sync_out_symbols.txt sync_out_debug.txt} {
+foreach f {sync_out_symbols.txt sync_out_debug.txt sync_internal.txt} {
     if {[file exists $sim_dir/$f]} {
         file copy -force $sim_dir/$f ./sim/$f
         puts "Result copied to ./sim/$f"

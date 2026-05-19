@@ -1,0 +1,10 @@
+58,59c58,63
+< assign vp_full  = {{(W_ACC - W_PROD + SHIFT_P){prod_k1[W_PROD-1]}}, prod_k1[W_PROD-1:SHIFT_P]};
+< assign k2e_full = {{(W_ACC - W_PROD + SHIFT_P){prod_k2[W_PROD-1]}}, prod_k2[W_PROD-1:SHIFT_P]};
+---
+> // D3 patch: округление перед сдвигом (1<<(SHIFT_P-1) = 1<<14) для устранения
+> // смещения, вносимого арифметическим сдвигом вправо в сторону −∞.
+> wire signed [W_PROD-1:0] prod_k1_r = prod_k1 + {{(W_PROD - SHIFT_P){1'b0}}, 1'b1, {(SHIFT_P-1){1'b0}}};
+> wire signed [W_PROD-1:0] prod_k2_r = prod_k2 + {{(W_PROD - SHIFT_P){1'b0}}, 1'b1, {(SHIFT_P-1){1'b0}}};
+> assign vp_full  = {{(W_ACC - W_PROD + SHIFT_P){prod_k1_r[W_PROD-1]}}, prod_k1_r[W_PROD-1:SHIFT_P]};
+> assign k2e_full = {{(W_ACC - W_PROD + SHIFT_P){prod_k2_r[W_PROD-1]}}, prod_k2_r[W_PROD-1:SHIFT_P]};

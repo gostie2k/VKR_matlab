@@ -1,0 +1,38 @@
+D4 — long stimulus N_SYM=8000, τ=0.3, seed=42, EbN0=20.0 dB
+==============================================================
+N_STIM = 15960 (×4 vs baseline). N_sym_out = 7980.
+tb_sync_top.v temporarily patched (MAX_SAMP, N_STIM) and reverted
+after the run. Originals in this directory: tb_sync_top.v.orig,
+gen_sync_top_stimulus.py.orig.
+
+Stationarity check
+------------------
+| trim | N_steady | MER   | μ ratio | μ std | vi_reg |
+|------|----------|-------|---------|-------|--------|
+|  200 |  7780    | 12.40 | 0.763   |  305  | −17.8  |
+| 1000 |  6980    | 12.40 | 0.763   |  305  | −17.8  |
+| 4000 |  3980    | 12.53 | 0.763   |  305  | −17.8  |
+
+Observations
+------------
+1. MER is essentially flat across trim depths (12.40 → 12.53 dB).
+   The transient contributes at most 0.13 dB to the metric measured
+   on the standard N_SYM=2000 stimulus; the apparent 12.7 dB value
+   is the steady-state MER, NOT a transient inflation.
+
+2. Internal-state metrics (μ_lock mean/std, debug_w, vi_reg) are
+   trim-independent — the steady_start window in analyse_v3.py
+   already excludes any transient.
+
+3. The longer run reveals modest seed-42 noise: vi_reg drifts from
+   −14 (N=2000) to −18 (N=8000), consistent with the negative
+   integrator bias accumulating slowly under random e. μ_lock ratio
+   stays at 0.76, MER stays at 12.4–12.5 dB. No instability or
+   cycle-slips over the full 7980 symbols.
+
+Conclusion
+----------
+The 12.7 dB MER plateau at the working point is a true steady-state
+property; lengthening the stimulus does NOT reveal additional gain
+or convergence to a higher MER. This rules out "still in transient"
+as a possible explanation for the gap to ТЗ target.

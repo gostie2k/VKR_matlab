@@ -1,0 +1,4 @@
+=== golden_offline_sync ===
+EbN0 = 15.0 dB, seed = 42, N_sym = 2000, τ = 0.3
+trim = 200 symbols
+MER_ideal = 9.30 dB

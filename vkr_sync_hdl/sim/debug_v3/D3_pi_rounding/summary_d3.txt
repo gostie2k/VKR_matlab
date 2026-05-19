@@ -1,0 +1,58 @@
+D3 — PI rounding patch (`+ 1<<14` before `>>>15`)
+==================================================
+Stim: τ=0.3, seed=42, N_SYM=2000.
+
+Patch:
+    prod_k1_r = prod_k1 + (1 << 14);   // round-to-nearest before truncation
+    prod_k2_r = prod_k2 + (1 << 14);
+    vp_full / k2e_full computed from the rounded products instead of
+    direct arithmetic right shift (which is round-toward-−∞).
+
+Note: the patch was applied, both prog runs completed, the patch was
+then REVERTED. Current rtl/sync_loop_filter_pi.v == original baseline.
+pi_patch.diff in this directory documents the exact change made.
+
+Comparison
+----------
+| EbN0 |  Variant   | MER   |  μ ratio |  μ std | vi_reg | debug_w |
+|------|------------|-------|----------|--------|--------|---------|
+|  60  | baseline   | 23.27 |  0.700   |   62   | −17.1  | 32766.5 |
+|  60  | patched    | 32.72 |  0.613   |   32   | −0.09  | 32764.8 |
+|------|------------|-------|----------|--------|--------|---------|
+|  20  | baseline   | 12.66 |  0.775   |  257   | −14.4  | 32771.3 |
+|  20  | patched    | 13.88 |  0.615   |  119   | +2.0   | 32769.8 |
+
+Deltas
+------
+EbN0=60 dB :  ΔMER = +9.45 dB,  vi_reg bias eliminated, μ_std −48 %.
+EbN0=20 dB :  ΔMER = +1.22 dB,  vi_reg bias eliminated, μ_std −54 %.
+
+Interpretation
+--------------
+The current arithmetic right shift `>>> 15` truncates toward −∞.
+For K1 = 0xFD8A (negative) and zero-mean e the expected mean of vp
+is 0 but the truncation contributes a systematic NEGATIVE offset of
+≈ 0.5 LSB per cycle. The integrator accumulates this and settles at
+vi_reg ≈ −14…−17, which biases w_step DOWN and forces μ_lock toward
+a non-canonical equilibrium 0.70…0.78 (instead of 0.61, which is the
+true Farrow basepoint for τ=0.3 once the +0.077 self-noise shift is
+included — see diagnosis.md §1).
+
+The patched variant (round-to-nearest) cancels the bias: vi_reg → 0,
+μ_lock falls back to 0.61, and the residual phase error is much
+smaller. The MER gain at high SNR is dramatic (+9.5 dB) because the
+quantization-bias floor of the original variant was the dominant
+error source above EbN0 ≈ 30 dB.
+
+The gain at the working point (EbN0=20) is +1.2 dB — modest because
+thermal noise + Gardner self-noise dominate at that SNR, but still
+brings V3 MER (13.88 dB) within ~0.3 dB of MER_ideal (14.14 dB).
+
+Status of patch
+---------------
+The patch is NOT merged. rtl/sync_loop_filter_pi.v is reverted to
+baseline per the constraint that V3 architecture remains unchanged.
+The result is recorded as Open Question #1 in diagnosis_v2.md:
+adopting this single-line fix would raise the high-SNR MER ceiling
+of the architecture by ~9 dB at essentially zero hardware cost
+(no extra DSP, one adder).

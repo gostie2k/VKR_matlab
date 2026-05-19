@@ -1,0 +1,83 @@
+
+****** Vivado v2023.2 (64-bit)
+  **** SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+  **** IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+  **** SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source scripts/run_sim_top.tcl
+# open_project ./vivado_prj_top/sync_top.xpr
+INFO: [filemgmt 56-3] Default IP Output Path : Could not find the directory '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.gen/sources_1'.
+Scanning sources...
+Finished scanning sources
+# set sim_dir "./vivado_prj_top/sync_top.sim/sim_1/behav/xsim"
+# file mkdir $sim_dir
+# foreach f {sync_stim_i.hex sync_stim_q.hex} {
+#     if {[file exists ./sim/$f]} {
+#         file copy -force ./sim/$f $sim_dir/$f
+#     } else {
+#         puts "ERROR: ./sim/$f отсутствует. Запустите gen_sync_top_stimulus.py."
+#         return -code error
+#     }
+# }
+# launch_simulation
+Command: launch_simulation 
+INFO: [Vivado 12-12493] Simulation top is 'tb_sync_top'
+INFO: [Vivado 12-5682] Launching behavioral simulation in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-72] Using boost library from '/home/t-kudimov/viv/Vivado/2023.2/tps/boost_1_72_0'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_sync_top' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.sim/sim_1/behav/xsim'
+xvlog --incr --relax -prj tb_sync_top_vlog.prj
+Waiting for jobs to finish...
+No pending jobs, compilation finished.
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.sim/sim_1/behav/xsim'
+xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_sync_top_behav xil_defaultlib.tb_sync_top xil_defaultlib.glbl -log elaborate.log
+Vivado Simulator v2023.2
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+Running: /home/t-kudimov/viv/Vivado/2023.2/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_sync_top_behav xil_defaultlib.tb_sync_top xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Pass Through NonSizing Optimizer
+Completed static elaboration
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in '/home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado_prj_top/sync_top.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_sync_top_behav -key {Behavioral:sim_1:Functional:tb_sync_top} -tclbatch {tb_sync_top.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Time resolution is 1 ps
+source tb_sync_top.tcl
+## current_wave_config
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_top/stim_i" to the wave window because it has 128000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+WARNING: [Wavedata 42-489] Can't add object "/tb_sync_top/stim_q" to the wave window because it has 128000 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+[tb] Starting: 3960 samples
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_sync_top_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+# run all
+[tb] Done. Symbols: 1968, Clocks: 3980
+$finish called at time : 63816 ns : File "/home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/tb_sync_top.v" Line 64
+# foreach f {sync_out_symbols.txt sync_out_debug.txt sync_internal.txt} {
+#     if {[file exists $sim_dir/$f]} {
+#         file copy -force $sim_dir/$f ./sim/$f
+#         puts "Result copied to ./sim/$f"
+#     } else {
+#         puts "WARNING: $sim_dir/$f не создан тестбенчем."
+#     }
+# }
+Result copied to ./sim/sync_out_symbols.txt
+WARNING: ./vivado_prj_top/sync_top.sim/sim_1/behav/xsim/sync_out_debug.txt не создан тестбенчем.
+Result copied to ./sim/sync_internal.txt
+# close_sim
+INFO: [Simtcl 6-16] Simulation closed
+# puts "sync_top simulation completed."
+sync_top simulation completed.
+INFO: [Common 17-206] Exiting Vivado at Tue May 19 09:19:27 2026...

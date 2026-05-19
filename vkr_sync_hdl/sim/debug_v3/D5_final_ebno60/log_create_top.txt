@@ -1,0 +1,39 @@
+
+****** Vivado v2023.2 (64-bit)
+  **** SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+  **** IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+  **** SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source scripts/create_project_top.tcl
+# set proj_name "sync_top"
+# set proj_dir  "./vivado_prj_top"
+# set part      "xc7z020clg484-1"
+# if {[file exists $proj_dir]} {
+#     file delete -force $proj_dir
+# }
+# create_project $proj_name $proj_dir -part $part -force
+# add_files -norecurse [glob ./rtl/*.v]
+# add_files -fileset sim_1 -norecurse ./sim/tb_sync_top.v
+# set sim_dir "$proj_dir/$proj_name.sim/sim_1/behav/xsim"
+# file mkdir $sim_dir
+# foreach f {sync_stim_i.hex sync_stim_q.hex} {
+#     if {[file exists ./sim/$f]} {
+#         file copy -force ./sim/$f $sim_dir/$f
+#         puts "Copied stimulus: ./sim/$f -> $sim_dir"
+#     } else {
+#         puts "ERROR: ./sim/$f not found."
+#         puts "Run first: cd sim && python3 gen_sync_top_stimulus.py && cd .."
+#         return -code error
+#     }
+# }
+Copied stimulus: ./sim/sync_stim_i.hex -> ./vivado_prj_top/sync_top.sim/sim_1/behav/xsim
+Copied stimulus: ./sim/sync_stim_q.hex -> ./vivado_prj_top/sync_top.sim/sim_1/behav/xsim
+# set_property top sync_top [current_fileset]
+# set_property top tb_sync_top [get_filesets sim_1]
+# set_property -name {STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS} \
+#     -value {-mode out_of_context} -objects [get_runs synth_1]
+# puts "sync_top project created at $proj_dir"
+sync_top project created at ./vivado_prj_top
+INFO: [Common 17-206] Exiting Vivado at Tue May 19 09:40:14 2026...

@@ -1,0 +1,42 @@
+D2 — seed sweep, τ=0.3, EbN0=20.0 dB, N_SYM=2000
+==================================================
+Trim = 200 symbols, steady window = clk_max * 0.75.
+
+| seed | MER_V | MER_id | Loss | μ ratio | μ std | debug_w | vi_reg | RMS  |
+|------|-------|--------|------|---------|-------|---------|--------|------|
+| 42   | 12.66 | 14.14  | 1.48 | 0.775   |  257  | 32771.3 | -14.4  | 20355 |
+| 100  | 12.84 | 14.08  | 1.24 | 0.759   |  159  | 32767.1 | -17.8  | 20709 |
+| 200  | 12.93 | 14.17  | 1.24 | 0.735   |  114  | 32770.7 | -13.4  | 21109 |
+| 300  | 12.39 | 13.99  | 1.60 | 0.766   |  299  | 32769.0 | -15.1  | 20279 |
+| 400  | 12.68 | 14.00  | 1.32 | 0.756   |  194  | 32771.8 | -15.5  | 20836 |
+
+Statistics (across 5 seeds)
+---------------------------
+MER_Verilog:  mean = 12.70 dB,  std = 0.20 dB,  range 12.39…12.93
+MER_ideal:    mean = 14.08 dB,  std = 0.07 dB
+Loss budget:  mean = 1.38 dB,   std = 0.15 dB,  range 1.24…1.60
+μ ratio:      mean = 0.758,     std = 0.014
+μ std:        mean = 205,       std = 73
+
+Observations
+------------
+1. The system is reproducibly stable across all 5 seeds — no outlier,
+   no loss of lock. Loss budget vs ideal is consistently 1.2…1.6 dB.
+
+2. μ_lock equilibrium clusters at 0.75 ± 0.015 across seeds, i.e. the
+   shift from clean-channel value (0.70 at EbN0=60) is data-driven
+   (Gardner self-noise distribution) and not seed-specific.
+
+3. μ_std varies by ×2.6 between seeds (114…299), but stays well below
+   the lock-loss threshold (~1000 observed at EbN0=15) — indicates
+   safety margin in tracking.
+
+4. vi_reg sits at −13…−18 across all seeds — confirms the small
+   negative bias is an arithmetic artefact (`>>>15` rounding toward
+   −∞), not data-dependent.
+
+Conclusion
+----------
+V3 behavior at the working point (τ=0.3, EbN0=20) is robust to seed
+choice. The 12.7 dB MER plateau is a deterministic property of the
+architecture, not a fortuitous seed-42 outlier.
