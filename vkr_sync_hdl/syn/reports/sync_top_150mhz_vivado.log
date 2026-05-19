@@ -1,0 +1,82 @@
+#-----------------------------------------------------------
+# Vivado v2023.2 (64-bit)
+# SW Build 4029153 on Fri Oct 13 20:13:54 MDT 2023
+# IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
+# SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
+# Start of session at: Tue May 19 21:06:57 2026
+# Process ID: 110280
+# Current directory: /home/t-kudimov/temp/matmodel/vkr_sync_hdl
+# Command line: vivado -mode batch -source syn/scripts/run_ooc_synth.tcl -tclargs sync_top sync_top_150mhz syn/constraints/sync_top_ooc_150mhz.xdc
+# Log file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.log
+# Journal file: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/vivado.jou
+# Running On: PC105355, OS: Linux, CPU Frequency: 2991.546 MHz, CPU Physical cores: 12, Host memory: 32712 MB
+#-----------------------------------------------------------
+source syn/scripts/run_ooc_synth.tcl
+# if {[llength $argv] < 2} {
+#     puts "ERROR: usage: vivado -mode batch -source run_ooc_synth.tcl -tclargs <top> <out_name> \[<xdc>\]"
+#     exit 1
+# }
+# set top_module  [lindex $argv 0]
+# set output_name [lindex $argv 1]
+# if {[llength $argv] >= 3} {
+#     set xdc_file [lindex $argv 2]
+# } else {
+#     set xdc_file "syn/constraints/sync_top_ooc.xdc"
+# }
+# set part      "xc7z020clg484-1"
+# set rpt_dir   "syn/reports"
+# file mkdir $rpt_dir
+# puts "=========================================================="
+==========================================================
+# puts "OOC synthesis: top=$top_module, out=$output_name"
+OOC synthesis: top=sync_top, out=sync_top_150mhz
+# puts "Part=$part, XDC=$xdc_file"
+Part=xc7z020clg484-1, XDC=syn/constraints/sync_top_ooc_150mhz.xdc
+# puts "=========================================================="
+==========================================================
+# create_project -in_memory -part $part
+# foreach f [glob -nocomplain rtl/*.v] {
+#     read_verilog $f
+# }
+# read_xdc $xdc_file
+# synth_design -top $top_module -part $part -mode out_of_context
+Command: synth_design -top sync_top -part xc7z020clg484-1 -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Device 21-403] Loading part xc7z020clg484-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 4 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 110308
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2132.422 ; gain = 420.859 ; free physical = 19644 ; free virtual = 33518
+---------------------------------------------------------------------------------
+INFO: [Synth 8-6157] synthesizing module 'sync_top' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:22]
+INFO: [Synth 8-6157] synthesizing module 'sync_agc' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_agc.v:15]
+	Parameter W_IN bound to: 16 - type: integer 
+	Parameter W_OUT bound to: 16 - type: integer 
+	Parameter W_ACC bound to: 33 - type: integer 
+	Parameter N_AGC bound to: 5 - type: integer 
+WARNING: [Synth 8-693] zero replication count - replication ignored [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_agc.v:51]
+INFO: [Synth 8-6155] done synthesizing module 'sync_agc' (0#1) [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_agc.v:15]
+INFO: [Synth 8-6157] synthesizing module 'sync_farrow_parab' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v:32]
+	Parameter W_IN bound to: 16 - type: integer 
+	Parameter W_MU bound to: 12 - type: integer 
+	Parameter W_OUT bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'sync_farrow_parab' (0#1) [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_farrow_parab.v:32]
+INFO: [Synth 8-6157] synthesizing module 'sync_mod1_nco' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_mod1_nco.v:10]
+	Parameter W_CNT bound to: 16 - type: integer 
+	Parameter W_MU bound to: 12 - type: integer 
+	Parameter W_W bound to: 16 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'sync_mod1_nco' (0#1) [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_mod1_nco.v:10]
+ERROR: [Synth 8-91] ambiguous clock in event control [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:150]
+ERROR: [Synth 8-6156] failed synthesizing module 'sync_top' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:22]
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:02 . Memory (MB): peak = 2205.391 ; gain = 493.828 ; free physical = 19551 ; free virtual = 33425
+---------------------------------------------------------------------------------
+RTL Elaboration failed
+INFO: [Common 17-83] Releasing license: Synthesis
+13 Infos, 1 Warnings, 0 Critical Warnings and 3 Errors encountered.
+synth_design failed
+ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
+INFO: [Common 17-206] Exiting Vivado at Tue May 19 21:07:06 2026...
