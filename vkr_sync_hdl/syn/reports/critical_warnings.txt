@@ -12,10 +12,4 @@
 [sync_ted_gardner_100mhz_log.txt] CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-from [get_ports {ctrl_soft_reset ctrl_enable ctrl_agc_bypass {reg_k1[*]} {reg_k2[*]} {reg_w_nom[*]} {reg_clamp[*]} {reg_agc_target[*]}}]'. [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/syn/constraints/sync_top_ooc.xdc:25]
 [sync_loop_filter_pi_100mhz_log.txt] #     puts "ERROR: usage: vivado -mode batch -source run_ooc_synth.tcl -tclargs <top> <out_name> \[<xdc>\]"
 [sync_top_100mhz_log.txt] #     puts "ERROR: usage: vivado -mode batch -source run_ooc_synth.tcl -tclargs <top> <out_name> \[<xdc>\]"
-[sync_top_100mhz_log.txt] ERROR: [Synth 8-91] ambiguous clock in event control [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:150]
-[sync_top_100mhz_log.txt] ERROR: [Synth 8-6156] failed synthesizing module 'sync_top' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:22]
-[sync_top_100mhz_log.txt] ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details
 [sync_top_150mhz_log.txt] #     puts "ERROR: usage: vivado -mode batch -source run_ooc_synth.tcl -tclargs <top> <out_name> \[<xdc>\]"
-[sync_top_150mhz_log.txt] ERROR: [Synth 8-91] ambiguous clock in event control [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:150]
-[sync_top_150mhz_log.txt] ERROR: [Synth 8-6156] failed synthesizing module 'sync_top' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:22]
-[sync_top_150mhz_log.txt] ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details

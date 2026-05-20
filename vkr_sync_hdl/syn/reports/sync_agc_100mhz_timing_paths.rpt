@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date         : Tue May 19 21:06:26 2026
+| Date         : Wed May 20 01:31:59 2026
 | Host         : PC105355 running 64-bit Ubuntu 24.04.4 LTS
 | Command      : report_timing -delay_type max -max_paths 10 -nworst 10 -path_type full -file syn/reports/sync_agc_100mhz_timing_paths.rpt
 | Design       : sync_agc
@@ -12,20 +12,19 @@ Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanc
 
 Timing Report
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.177ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[6]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.770ns  (logic 4.421ns (65.307%)  route 2.349ns (34.693%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -37,51 +36,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 r  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[29]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[22])
+                                                      3.841     6.460 r  mult_q/P[22]
+                         net (fo=1, routed)           1.158     7.619    mult_q_n_83
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.743 r  out_q[6]_i_1/O
+                         net (fo=1, routed)           0.000     7.743    out_q[6]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         r  out_q_reg[6]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -89,27 +53,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.031    10.920    out_q_reg[6]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.920    
+                         arrival time                          -7.743    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.177    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.177ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[6]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.770ns  (logic 4.421ns (65.307%)  route 2.349ns (34.693%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -121,51 +84,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 f  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[29]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[22])
+                                                      3.841     6.460 r  mult_q/P[22]
+                         net (fo=1, routed)           1.158     7.619    mult_q_n_83
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.743 r  out_q[6]_i_1/O
+                         net (fo=1, routed)           0.000     7.743    out_q[6]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         r  out_q_reg[6]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -173,27 +101,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.031    10.920    out_q_reg[6]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.920    
+                         arrival time                          -7.743    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.177    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.177ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[6]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.770ns  (logic 4.421ns (65.307%)  route 2.349ns (34.693%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -205,51 +132,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 r  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[28]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[22])
+                                                      3.841     6.460 f  mult_q/P[22]
+                         net (fo=1, routed)           1.158     7.619    mult_q_n_83
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.743 f  out_q[6]_i_1/O
+                         net (fo=1, routed)           0.000     7.743    out_q[6]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         f  out_q_reg[6]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -257,27 +149,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.031    10.920    out_q_reg[6]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.920    
+                         arrival time                          -7.743    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.177    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.177ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[6]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.770ns  (logic 4.421ns (65.307%)  route 2.349ns (34.693%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -289,51 +180,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 f  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[28]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[22])
+                                                      3.841     6.460 f  mult_q/P[22]
+                         net (fo=1, routed)           1.158     7.619    mult_q_n_83
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.743 f  out_q[6]_i_1/O
+                         net (fo=1, routed)           0.000     7.743    out_q[6]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         f  out_q_reg[6]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -341,27 +197,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.031    10.920    out_q_reg[6]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.920    
+                         arrival time                          -7.743    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.177    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.182ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[10]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.763ns  (logic 4.421ns (65.366%)  route 2.342ns (34.634%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -373,51 +228,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 r  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[27]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[26])
+                                                      3.841     6.460 r  mult_q/P[26]
+                         net (fo=1, routed)           1.152     7.612    mult_q_n_79
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.736 r  out_q[10]_i_1/O
+                         net (fo=1, routed)           0.000     7.736    out_q[10]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         r  out_q_reg[10]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -425,27 +245,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.029    10.918    out_q_reg[10]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.918    
+                         arrival time                          -7.736    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.182    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.182ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[10]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.763ns  (logic 4.421ns (65.366%)  route 2.342ns (34.634%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -457,51 +276,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 f  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[27]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[26])
+                                                      3.841     6.460 r  mult_q/P[26]
+                         net (fo=1, routed)           1.152     7.612    mult_q_n_79
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.736 r  out_q[10]_i_1/O
+                         net (fo=1, routed)           0.000     7.736    out_q[10]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         r  out_q_reg[10]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -509,27 +293,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.029    10.918    out_q_reg[10]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.918    
+                         arrival time                          -7.736    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.182    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.182ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[10]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.763ns  (logic 4.421ns (65.366%)  route 2.342ns (34.634%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -541,51 +324,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 r  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[26]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[26])
+                                                      3.841     6.460 f  mult_q/P[26]
+                         net (fo=1, routed)           1.152     7.612    mult_q_n_79
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.736 f  out_q[10]_i_1/O
+                         net (fo=1, routed)           0.000     7.736    out_q[10]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         f  out_q_reg[10]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -593,27 +341,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.029    10.918    out_q_reg[10]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.918    
+                         arrival time                          -7.736    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.182    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.182ns  (required time - arrival time)
+  Source:                 accum_reg[29]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[10]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.763ns  (logic 4.421ns (65.366%)  route 2.342ns (34.634%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -625,51 +372,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 f  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[26]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[29]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  accum_reg[29]/Q
+                         net (fo=3, routed)           1.190     2.619    accum_reg[29]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[13]_P[26])
+                                                      3.841     6.460 f  mult_q/P[26]
+                         net (fo=1, routed)           1.152     7.612    mult_q_n_79
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.736 f  out_q[10]_i_1/O
+                         net (fo=1, routed)           0.000     7.736    out_q[10]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         f  out_q_reg[10]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -677,27 +389,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.029    10.918    out_q_reg[10]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.918    
+                         arrival time                          -7.736    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.182    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.191ns  (required time - arrival time)
+  Source:                 accum_reg[28]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[6]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.756ns  (logic 4.421ns (65.440%)  route 2.335ns (34.560%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -709,51 +420,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 r  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[25]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[28]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 r  accum_reg[28]/Q
+                         net (fo=3, routed)           1.176     2.605    accum_reg[28]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[12]_P[22])
+                                                      3.841     6.446 r  mult_q/P[22]
+                         net (fo=1, routed)           1.158     7.605    mult_q_n_83
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.729 r  out_q[6]_i_1/O
+                         net (fo=1, routed)           0.000     7.729    out_q[6]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         r  out_q_reg[6]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -761,27 +437,26 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.031    10.920    out_q_reg[6]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.920    
+                         arrival time                          -7.729    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.191    
 
-Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
-  Source:                 in_q[15]
-                            (input port clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
-  Destination:            accum_reg[32]/D
+Slack (MET) :             3.191ns  (required time - arrival time)
+  Source:                 accum_reg[28]/C
+                            (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
+  Destination:            out_q_reg[6]/D
                             (rising edge-triggered cell FDCE clocked by clk  {rise@0.000ns fall@5.000ns period=10.000ns})
   Path Group:             clk
   Path Type:              Setup (Max at Slow Process Corner)
   Requirement:            10.000ns  (clk rise@10.000ns - clk rise@0.000ns)
-  Data Path Delay:        9.384ns  (logic 6.591ns (70.238%)  route 2.793ns (29.762%))
-  Logic Levels:           14  (CARRY4=11 DSP48E1=1 LUT2=1 LUT3=1)
-  Input Delay:            2.000ns
-  Clock Path Skew:        0.924ns (DCD - SCD + CPR)
+  Data Path Delay:        6.756ns  (logic 4.421ns (65.440%)  route 2.335ns (34.560%))
+  Logic Levels:           2  (DSP48E1=1 LUT3=1)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
     Destination Clock Delay (DCD):    0.924ns = ( 10.924 - 10.000 ) 
-    Source Clock Delay      (SCD):    0.000ns
+    Source Clock Delay      (SCD):    0.973ns
     Clock Pessimism Removal (CPR):    0.000ns
   Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
     Total System Jitter     (TSJ):    0.071ns
@@ -793,51 +468,16 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
   -------------------------------------------------------------------    -------------------
                          (clock clk rise edge)        0.000     0.000 r  
                          propagated clock network latency
-                                                      0.000     0.000    
-                         input delay                  2.000     2.000    
-                                                      0.000     2.000 f  in_q[15] (IN)
-                         net (fo=21, unset)           0.973     2.973    in_q[15]
-    DSP48_X2Y19          DSP48E1 (Prop_dsp48e1_A[25]_P[0])
-                                                      3.841     6.814 f  power_q/P[0]
-                         net (fo=3, routed)           1.075     7.889    power_q__0[0]
-    SLICE_X35Y42         LUT3 (Prop_lut3_I0_O)        0.124     8.013 r  accum[0]_i_28/O
-                         net (fo=1, routed)           0.190     8.202    accum[0]_i_28_n_0
-    SLICE_X34Y42         CARRY4 (Prop_carry4_DI[1]_CO[3])
-                                                      0.520     8.722 r  accum_reg[0]_i_17/CO[3]
-                         net (fo=1, routed)           0.000     8.722    accum_reg[0]_i_17_n_0
-    SLICE_X34Y43         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.839 r  accum_reg[0]_i_4/CO[3]
-                         net (fo=1, routed)           0.000     8.839    accum_reg[0]_i_4_n_0
-    SLICE_X34Y44         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     8.956 r  accum_reg[0]_i_3/CO[3]
-                         net (fo=1, routed)           0.000     8.956    accum_reg[0]_i_3_n_0
-    SLICE_X34Y45         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.073 r  accum_reg[4]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.073    accum_reg[4]_i_2_n_0
-    SLICE_X34Y46         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.190 r  accum_reg[8]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.190    accum_reg[8]_i_2_n_0
-    SLICE_X34Y47         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.307 r  accum_reg[12]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.307    accum_reg[12]_i_2_n_0
-    SLICE_X34Y48         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.424 r  accum_reg[16]_i_2/CO[3]
-                         net (fo=1, routed)           0.000     9.424    accum_reg[16]_i_2_n_0
-    SLICE_X34Y49         CARRY4 (Prop_carry4_CI_CO[3])
-                                                      0.117     9.541 r  accum_reg[20]_i_2/CO[3]
-                         net (fo=1, routed)           0.001     9.542    accum_reg[20]_i_2_n_0
-    SLICE_X34Y50         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.219     9.761 r  accum_reg[24]_i_2/O[0]
-                         net (fo=11, routed)          0.555    10.316    in0
-    SLICE_X35Y50         LUT2 (Prop_lut2_I0_O)        0.295    10.611 r  accum[28]_i_4/O
-                         net (fo=1, routed)           0.000    10.611    accum[28]_i_4_n_0
-    SLICE_X35Y50         CARRY4 (Prop_carry4_S[1]_CO[3])
-                                                      0.550    11.161 r  accum_reg[28]_i_1/CO[3]
-                         net (fo=1, routed)           0.000    11.161    accum_reg[28]_i_1_n_0
-    SLICE_X35Y51         CARRY4 (Prop_carry4_CI_O[0])
-                                                      0.223    11.384 r  accum_reg[32]_i_1/O[0]
-                         net (fo=1, routed)           0.000    11.384    accum_reg[32]_i_1_n_7
-    SLICE_X35Y51         FDCE                                         r  accum_reg[32]/D
+                                                      0.973     0.973    
+    SLICE_X37Y54         FDCE                         0.000     0.973 r  accum_reg[28]/C
+    SLICE_X37Y54         FDCE (Prop_fdce_C_Q)         0.456     1.429 f  accum_reg[28]/Q
+                         net (fo=3, routed)           1.176     2.605    accum_reg[28]
+    DSP48_X2Y24          DSP48E1 (Prop_dsp48e1_A[12]_P[22])
+                                                      3.841     6.446 r  mult_q/P[22]
+                         net (fo=1, routed)           1.158     7.605    mult_q_n_83
+    SLICE_X37Y61         LUT3 (Prop_lut3_I2_O)        0.124     7.729 r  out_q[6]_i_1/O
+                         net (fo=1, routed)           0.000     7.729    out_q[6]_i_1_n_0
+    SLICE_X37Y61         FDCE                                         r  out_q_reg[6]/D
   -------------------------------------------------------------------    -------------------
 
                          (clock clk rise edge)       10.000    10.000 r  
@@ -845,12 +485,12 @@ Slack (VIOLATED) :        -0.433ns  (required time - arrival time)
                                                       0.924    10.924    
                          clock pessimism              0.000    10.924    
                          clock uncertainty           -0.035    10.889    
-    SLICE_X35Y51         FDCE (Setup_fdce_C_D)        0.062    10.951    accum_reg[32]
+    SLICE_X37Y61         FDCE (Setup_fdce_C_D)        0.031    10.920    out_q_reg[6]
   -------------------------------------------------------------------
-                         required time                         10.951    
-                         arrival time                         -11.384    
+                         required time                         10.920    
+                         arrival time                          -7.729    
   -------------------------------------------------------------------
-                         slack                                 -0.433    
+                         slack                                  3.191    
 
 
 

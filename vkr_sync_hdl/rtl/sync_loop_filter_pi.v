@@ -13,7 +13,9 @@
 //                  K1 ≈ −0,0192 → 0xFB12 в Q1.15
 //                  K2 ≈ −5,13·10⁻⁴ → 0xFFEF в Q1.15
 //
-// Конвейер     : 2 такта от e_valid до v_pi_valid
+// Конвейер     : 3 такта от e_valid до v_pi_valid
+//                (ступень 3 добавлена после OOC-синтеза этапа 3.12
+//                 для разрыва критической цепи adder→sat→adder→sat)
 // Ресурсы      : 2 × DSP48E1, ~100 LUT (насыщение + сумматоры)
 //
 // Автор        : Кудимов А.А., ВКР магистра, 2026
@@ -81,9 +83,17 @@ always @(posedge clk or posedge reset) begin
 end
 
 // =========================================================================
-// Ступень 2: обновление интегратора и формирование выхода
+// Ступень 2: обновление интегратора (vi_reg)
+//   vi_sum = vi_reg + k2e_s1      (32-bit add, комб.)
+//   vi_sat = saturate(vi_sum)     (32-bit compare, комб.)
+//   vi_reg <= vi_sat              (на posedge clk при valid_s1)
+//
+// Одновременно проталкиваем vp_s1 → vp_s1_d на один такт вперёд,
+// чтобы на ступени 3 сложить vp_s1_d с обновлённым vi_reg.
 // =========================================================================
-reg signed [W_ACC-1:0] vi_reg;  // регистр интегратора
+reg signed [W_ACC-1:0] vi_reg;   // регистр интегратора
+reg signed [W_ACC-1:0] vp_s1_d;  // задержанный vp_s1 для ступени 3
+reg                    valid_s2; // валид ступени 3
 
 // Граница насыщения в формате W_ACC с расширением
 wire signed [W_ACC-1:0] clamp_pos = {{(W_ACC - W_OUT){1'b0}}, clamp_lim};
@@ -97,28 +107,48 @@ wire signed [W_ACC-1:0] vi_sat;
 assign vi_sat = (vi_sum > clamp_pos) ? clamp_pos :
                 (vi_sum < clamp_neg) ? clamp_neg : vi_sum;
 
-// Выход петли: v_pi = vp + vi_sat
-wire signed [W_ACC-1:0] v_pi_sum = vp_s1 + vi_sat;
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        vi_reg   <= 0;
+        vp_s1_d  <= 0;
+        valid_s2 <= 1'b0;
+    end else begin
+        if (valid_s1) begin
+            vi_reg  <= vi_sat;
+            vp_s1_d <= vp_s1;
+        end
+        valid_s2 <= valid_s1;
+    end
+end
 
-// Насыщение выхода
+// =========================================================================
+// Ступень 3: формирование выхода v_pi
+//   v_pi_sum   = vp_s1_d + vi_reg          (32-bit add, комб.)
+//   v_pi_clp   = saturate(v_pi_sum)        (32-bit compare, комб.)
+//   v_pi_trunc = v_pi_clp[W_OUT-1:0]       (битовое усечение, комб.)
+//   v_pi_out   <= v_pi_trunc               (на posedge clk при valid_s2)
+//
+// Pipeline-вставка добавляет 1 такт латентности (теперь 3 такта от
+// e_valid до v_pi_valid). Это снимает критическую цепь
+// adder→sat→adder→sat одного такта, выявленную при OOC-синтезе.
+// =========================================================================
+wire signed [W_ACC-1:0] v_pi_sum = vp_s1_d + vi_reg;
+
 wire signed [W_ACC-1:0] v_pi_clamped;
 assign v_pi_clamped = (v_pi_sum > clamp_pos) ? clamp_pos :
                       (v_pi_sum < clamp_neg) ? clamp_neg : v_pi_sum;
 
-// Усечение до W_OUT бит (берём младшие W_OUT)
 wire signed [W_OUT-1:0] v_pi_trunc = v_pi_clamped[W_OUT-1:0];
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
-        vi_reg     <= 0;
         v_pi_out   <= 0;
         v_pi_valid <= 1'b0;
     end else begin
-        if (valid_s1) begin
-            vi_reg   <= vi_sat;
+        if (valid_s2) begin
             v_pi_out <= v_pi_trunc;
         end
-        v_pi_valid <= valid_s1;
+        v_pi_valid <= valid_s2;
     end
 end
 

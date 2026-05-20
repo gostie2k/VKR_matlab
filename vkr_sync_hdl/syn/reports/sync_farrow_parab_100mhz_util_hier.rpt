@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date         : Tue May 19 21:03:32 2026
+| Date         : Wed May 20 01:29:24 2026
 | Host         : PC105355 running 64-bit Ubuntu 24.04.4 LTS
 | Command      : report_utilization -hierarchical -file syn/reports/sync_farrow_parab_100mhz_util_hier.rpt
 | Design       : sync_farrow_parab
@@ -22,7 +22,7 @@ Table of Contents
 +-------------------+--------+------------+------------+---------+------+-----+--------+--------+------------+
 |      Instance     | Module | Total LUTs | Logic LUTs | LUTRAMs | SRLs | FFs | RAMB36 | RAMB18 | DSP Blocks |
 +-------------------+--------+------------+------------+---------+------+-----+--------+--------+------------+
-| sync_farrow_parab |  (top) |        298 |        298 |       0 |    0 | 320 |      0 |      0 |          6 |
+| sync_farrow_parab |  (top) |        252 |        252 |       0 |    0 | 290 |      0 |      0 |          6 |
 +-------------------+--------+------------+------------+---------+------+-----+--------+--------+------------+
 * Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
 

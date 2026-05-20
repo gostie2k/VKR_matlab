@@ -1,20 +1,35 @@
-+====================+===================+====================+
-| Launch Setup Clock | Launch Hold Clock | Pin                |
-+====================+===================+====================+
-| clk                | clk               | v_pi_out_reg[10]/D |
-| clk                | clk               | v_pi_out_reg[0]/D  |
-| clk                | clk               | v_pi_out_reg[6]/D  |
-| clk                | clk               | v_pi_out_reg[7]/D  |
-| clk                | clk               | v_pi_out_reg[12]/D |
-| clk                | clk               | v_pi_out_reg[11]/D |
-| clk                | clk               | v_pi_out_reg[2]/D  |
-| clk                | clk               | v_pi_out_reg[5]/D  |
-| clk                | clk               | v_pi_out_reg[1]/D  |
-| clk                | clk               | v_pi_out_reg[4]/D  |
-| clk                | clk               | v_pi_out_reg[3]/D  |
-| clk                | clk               | v_pi_out_reg[8]/D  |
-| clk                | clk               | v_pi_out_reg[14]/D |
-| clk                | clk               | v_pi_out_reg[13]/D |
-| clk                | clk               | v_pi_out_reg[9]/D  |
-| clk                | clk               | v_pi_out_reg[15]/D |
-+--------------------+-------------------+--------------------+
++====================+===================+=======================+
+| Launch Setup Clock | Launch Hold Clock | Pin                   |
++====================+===================+=======================+
+| clk                | clk               | u_agc/out_q_reg[3]/D  |
+| clk                | clk               | u_agc/out_q_reg[12]/D |
+| clk                | clk               | u_agc/out_q_reg[10]/D |
+| clk                | clk               | u_agc/out_i_reg[0]/D  |
+| clk                | clk               | u_agc/out_q_reg[0]/D  |
+| clk                | clk               | u_agc/out_i_reg[8]/D  |
+| clk                | clk               | u_agc/out_i_reg[13]/D |
+| clk                | clk               | u_agc/out_q_reg[2]/D  |
+| clk                | clk               | u_agc/out_q_reg[8]/D  |
+| clk                | clk               | u_agc/out_i_reg[5]/D  |
+| clk                | clk               | u_agc/out_q_reg[15]/D |
+| clk                | clk               | u_agc/out_i_reg[6]/D  |
+| clk                | clk               | u_agc/out_i_reg[7]/D  |
+| clk                | clk               | u_agc/out_i_reg[1]/D  |
+| clk                | clk               | u_agc/out_q_reg[4]/D  |
+| clk                | clk               | u_agc/out_i_reg[12]/D |
+| clk                | clk               | u_agc/out_i_reg[9]/D  |
+| clk                | clk               | u_agc/out_q_reg[14]/D |
+| clk                | clk               | u_agc/out_q_reg[13]/D |
+| clk                | clk               | u_agc/out_i_reg[11]/D |
+| clk                | clk               | u_agc/out_q_reg[1]/D  |
+| clk                | clk               | u_agc/out_i_reg[10]/D |
+| clk                | clk               | u_agc/out_i_reg[14]/D |
+| clk                | clk               | u_agc/out_q_reg[9]/D  |
+| clk                | clk               | u_agc/out_q_reg[11]/D |
+| clk                | clk               | u_agc/out_q_reg[6]/D  |
+| clk                | clk               | u_agc/out_q_reg[5]/D  |
+| clk                | clk               | u_agc/out_i_reg[4]/D  |
+| clk                | clk               | u_agc/out_q_reg[7]/D  |
+| clk                | clk               | u_agc/out_i_reg[2]/D  |
+| clk                | clk               | u_agc/out_i_reg[3]/D  |
++--------------------+-------------------+-----------------------+

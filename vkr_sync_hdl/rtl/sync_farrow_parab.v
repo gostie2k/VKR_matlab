@@ -185,15 +185,44 @@ localparam W_MUL2 = (W_MUL + 1) + W_MUS;
 wire signed [W_MUL2-1:0] t_mul_mu_i = t_s2_i * mu_s2_sgn;
 wire signed [W_MUL2-1:0] t_mul_mu_q = t_s2_q * mu_s2_sgn;
 
+// -------------------------------------------------------------------------
+// Дополнительная pipeline-ступень между DSP-произведением и сложением
+// с базовой компонентой v0 / округлением / насыщением. Введена для
+// разрыва критической цепи DSP_P → wide_add → round → sat (выявлена при
+// OOC-синтезе этапа 3.12, итерация 3). Латентность Farrow вырастает
+// с 3 до 4 тактов от in_valid до out_valid.
+// -------------------------------------------------------------------------
+reg signed [W_MUL2-1:0] t_mul_mu_i_d, t_mul_mu_q_d;
+reg signed [W_V-1:0]    v0_s2_d_i,    v0_s2_d_q;
+reg                     valid_s2_d;
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        t_mul_mu_i_d <= 0;
+        t_mul_mu_q_d <= 0;
+        v0_s2_d_i    <= 0;
+        v0_s2_d_q    <= 0;
+        valid_s2_d   <= 1'b0;
+    end else begin
+        if (valid_s2) begin
+            t_mul_mu_i_d <= t_mul_mu_i;
+            t_mul_mu_q_d <= t_mul_mu_q;
+            v0_s2_d_i    <= v0_s2_i;
+            v0_s2_d_q    <= v0_s2_q;
+        end
+        valid_s2_d <= valid_s2;
+    end
+end
+
 // v0 выравнивается сдвигом влево на 2·W_MU (он был Q(W_V-1).0, нужно .2W_MU)
-wire signed [W_MUL2-1:0] v0_aligned_i = {{(W_MUS + W_MU){v0_s2_i[W_V-1]}}, v0_s2_i} <<< (2*W_MU);
-wire signed [W_MUL2-1:0] v0_aligned_q = {{(W_MUS + W_MU){v0_s2_q[W_V-1]}}, v0_s2_q} <<< (2*W_MU);
+wire signed [W_MUL2-1:0] v0_aligned_i = {{(W_MUS + W_MU){v0_s2_d_i[W_V-1]}}, v0_s2_d_i} <<< (2*W_MU);
+wire signed [W_MUL2-1:0] v0_aligned_q = {{(W_MUS + W_MU){v0_s2_d_q[W_V-1]}}, v0_s2_d_q} <<< (2*W_MU);
 
 // Полный результат XI в формате Q.(2·W_MU)
-wire signed [W_MUL2:0] xi_scaled_i = $signed({t_mul_mu_i[W_MUL2-1], t_mul_mu_i}) +
-                                     $signed({v0_aligned_i[W_MUL2-1], v0_aligned_i});
-wire signed [W_MUL2:0] xi_scaled_q = $signed({t_mul_mu_q[W_MUL2-1], t_mul_mu_q}) +
-                                     $signed({v0_aligned_q[W_MUL2-1], v0_aligned_q});
+wire signed [W_MUL2:0] xi_scaled_i = $signed({t_mul_mu_i_d[W_MUL2-1], t_mul_mu_i_d}) +
+                                     $signed({v0_aligned_i[W_MUL2-1],   v0_aligned_i});
+wire signed [W_MUL2:0] xi_scaled_q = $signed({t_mul_mu_q_d[W_MUL2-1], t_mul_mu_q_d}) +
+                                     $signed({v0_aligned_q[W_MUL2-1],   v0_aligned_q});
 
 // Округление half-up и усечение до W_OUT бит знакового
 // Q-формат анализ:
@@ -235,7 +264,7 @@ always @(posedge clk or posedge reset) begin
         xi_s3_i <= 0; xi_s3_q <= 0;
         valid_s3 <= 1'b0;
     end else begin
-        if (valid_s2) begin
+        if (valid_s2_d) begin
             // Насыщение при переполнении
             if (overflow_i)
                 xi_s3_i <= xi_shifted_i[W_MUL2-SHIFT_OUT] ? SAT_NEG : SAT_POS;
@@ -247,7 +276,7 @@ always @(posedge clk or posedge reset) begin
             else
                 xi_s3_q <= xi_shifted_q[W_OUT-1:0];
         end
-        valid_s3 <= valid_s2;
+        valid_s3 <= valid_s2_d;
     end
 end
 

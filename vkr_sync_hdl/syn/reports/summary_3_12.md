@@ -10,20 +10,32 @@ Out-of-context-синтез выполнен с post-route timing: `synth_design
 
 | Модуль                | LUT  | LUTRAM | FF   | BRAM, kb | DSP48E1 | WNS, нс | Fmax, МГц |
 |-----------------------|------|--------|------|----------|---------|---------|-----------|
-| sync_agc              |  113 |      0 |   66 |        0 |       4 |  -0.433 |      95.8 |
-| sync_farrow_parab     |  298 |      0 |  320 |        0 |       6 |  -1.519 |      86.8 |
-| sync_mod1_nco         |  508 |      0 |   29 |        0 |       0 | -47.265 |      17.5 |
-| sync_ted_gardner      |   49 |      0 |  148 |        0 |       2 |  -0.224 |      97.8 |
-| sync_loop_filter_pi   |  186 |      0 |   52 |        0 |       2 |  -0.635 |      94.0 |
-| sync_top              |    - |      - |    - |        - |       - |       - |         - |
+| sync_agc              |   83 |      0 |  101 |        0 |       4 |  +3.177 |     146.6 |
+| sync_farrow_parab     |  252 |      0 |  290 |        0 |       6 |  +1.442 |     116.8 |
+| sync_mod1_nco         |   17 |      0 |   29 |        0 |       0 |  +5.244 |     210.3 |
+| sync_ted_gardner      |  100 |      0 |  151 |        0 |       2 |  +4.674 |     187.8 |
+| sync_loop_filter_pi   |  194 |      0 |   70 |        0 |       2 |  +2.915 |     141.1 |
+| sync_top              |  673 |      0 |  643 |        0 |      14 |  +1.720 |     120.8 |
 
 ## 2. Иерархическая утилизация sync_top (100 МГц)
 
-_(иерархический отчёт пуст — см. raw report sync_top_100mhz_util_hier.rpt)_
+| Instance | Module | LUTs (Total) | FF | DSP | RAMB36/18 |
+|----------|--------|--------------|----|-----|-----------|
+| sync_top | (top) | 673 | 643 | - | 0/0 |
+| (sync_top) | (top) | 0 | 10 | - | 0/0 |
+| u_agc | sync_agc | 94 | 100 | - | 0/0 |
+| u_farrow | sync_farrow_parab | 254 | 288 | - | 0/0 |
+| u_nco | sync_mod1_nco | 16 | 29 | - | 0/0 |
+| u_pi | sync_loop_filter_pi | 209 | 67 | - | 0/0 |
+| u_ted | sync_ted_gardner | 100 | 149 | - | 0/0 |
 
 ## 3. Критический путь sync_top при 100 МГц
 
-_(не удалось извлечь — см. sync_top_100mhz_timing_paths.rpt)_
+- **Slack:** +1.720 нс
+- **Source:** `t_mul_mu_i_i_18/C`
+- **Destination:** `u_farrow/t_mul_mu_q__0/PCIN[0]`
+- **Data Path Delay:** 6.796 нс
+- **Logic Levels:** 2
 
 ## 4. Особенности инференса
 
@@ -32,7 +44,9 @@ _(не удалось извлечь — см. sync_top_100mhz_timing_paths.rpt)
 ## 5. Запас по частоте
 
 Контрольный прогон sync_top при 150 МГц:
-- WNS: не извлечён
+- WNS = -0.802 нс
+- Fmax (по 150 МГц прогону) = 133.9 МГц
+- Worst path @150 МГц: `t_mul_mu_i_i_18/C` → `u_farrow/t_mul_mu_q__0/PCIN[0]`, data path 5.985 нс, logic levels 2
 
 ## 6. Критические warning'ы и DRC
 
@@ -50,13 +64,7 @@ _(не удалось извлечь — см. sync_top_100mhz_timing_paths.rpt)
 | sync_ted_gardner_100mhz_log.txt | CRITICAL WARNING: [Vivado 12-4739] set_false_path:No valid object(s) found for '-from [get_ports {ctrl_soft_reset ctrl_e |
 | sync_loop_filter_pi_100mhz_log.txt | #     puts "ERROR: usage: vivado -mode batch -source run_ooc_synth.tcl -tclargs <top> <out_name> \[<xdc>\]" |
 | sync_top_100mhz_log.txt | #     puts "ERROR: usage: vivado -mode batch -source run_ooc_synth.tcl -tclargs <top> <out_name> \[<xdc>\]" |
-| sync_top_100mhz_log.txt | ERROR: [Synth 8-91] ambiguous clock in event control [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:150] |
-| sync_top_100mhz_log.txt | ERROR: [Synth 8-6156] failed synthesizing module 'sync_top' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:2 |
-| sync_top_100mhz_log.txt | ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details |
 | sync_top_150mhz_log.txt | #     puts "ERROR: usage: vivado -mode batch -source run_ooc_synth.tcl -tclargs <top> <out_name> \[<xdc>\]" |
-| sync_top_150mhz_log.txt | ERROR: [Synth 8-91] ambiguous clock in event control [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:150] |
-| sync_top_150mhz_log.txt | ERROR: [Synth 8-6156] failed synthesizing module 'sync_top' [/home/t-kudimov/temp/matmodel/vkr_sync_hdl/rtl/sync_top.v:2 |
-| sync_top_150mhz_log.txt | ERROR: [Common 17-69] Command failed: Synthesis failed - please see the console or run log file for details |
 
 ## 7. Особенности OOC-ограничений
 
@@ -67,18 +75,6 @@ _(не удалось извлечь — см. sync_top_100mhz_timing_paths.rpt)
 ## 8. Открытые вопросы
 
 Модули с WNS < 0 (после false_path на конфиг-портах) требуют ручного решения:
-- **sync_agc** (sync_agc_100mhz): WNS = -0.433 нс при цели 100 МГц.
-  Источник: `in_q[15]`. Назначение: `accum_reg[32]/D`.
-  Data path 9.384 нс, 14 уровней логики.
-- **sync_farrow_parab** (sync_farrow_parab_100mhz): WNS = -1.519 нс при цели 100 МГц.
-  Источник: `t_mul_mu_i_i_18/C`. Назначение: `xi_s3_i_reg[14]/D`.
-  Data path 11.464 нс, 10 уровней логики.
-- **sync_mod1_nco** (sync_mod1_nco_100mhz): WNS = -47.265 нс при цели 100 МГц.
-  Источник: `w_step[1]`. Назначение: `mu_out_reg[0]/D`.
-  Data path 56.183 нс, 136 уровней логики.
-- **sync_ted_gardner** (sync_ted_gardner_100mhz): WNS = -0.224 нс при цели 100 МГц.
-  Источник: `diff_s1_q_reg[16]/C`. Назначение: `e_out_reg[3]/D`.
-  Data path 10.169 нс, 9 уровней логики.
-- **sync_loop_filter_pi** (sync_loop_filter_pi_100mhz): WNS = -0.635 нс при цели 100 МГц.
-  Источник: `prod_k2_r/CLK`. Назначение: `v_pi_out_reg[11]/D`.
-  Data path 10.628 нс, 21 уровней логики.
+- **sync_top** (sync_top_150mhz): WNS = -0.802 нс при цели 150 МГц.
+  Источник: `t_mul_mu_i_i_18/C`. Назначение: `u_farrow/t_mul_mu_q__0/PCIN[0]`.
+  Data path 5.985 нс, 2 уровней логики.

@@ -1,0 +1,152 @@
+diff --git a/vkr_sync_hdl/rtl/sync_loop_filter_pi.v b/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
+index bf6c08e..6ed5971 100644
+--- a/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
++++ b/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
+@@ -13,7 +13,9 @@
+ //                  K1 ≈ −0,0192 → 0xFB12 в Q1.15
+ //                  K2 ≈ −5,13·10⁻⁴ → 0xFFEF в Q1.15
+ //
+-// Конвейер     : 2 такта от e_valid до v_pi_valid
++// Конвейер     : 3 такта от e_valid до v_pi_valid
++//                (ступень 3 добавлена после OOC-синтеза этапа 3.12
++//                 для разрыва критической цепи adder→sat→adder→sat)
+ // Ресурсы      : 2 × DSP48E1, ~100 LUT (насыщение + сумматоры)
+ //
+ // Автор        : Кудимов А.А., ВКР магистра, 2026
+@@ -81,9 +83,17 @@ always @(posedge clk or posedge reset) begin
+ end
+ 
+ // =========================================================================
+-// Ступень 2: обновление интегратора и формирование выхода
++// Ступень 2: обновление интегратора (vi_reg)
++//   vi_sum = vi_reg + k2e_s1      (32-bit add, комб.)
++//   vi_sat = saturate(vi_sum)     (32-bit compare, комб.)
++//   vi_reg <= vi_sat              (на posedge clk при valid_s1)
++//
++// Одновременно проталкиваем vp_s1 → vp_s1_d на один такт вперёд,
++// чтобы на ступени 3 сложить vp_s1_d с обновлённым vi_reg.
+ // =========================================================================
+-reg signed [W_ACC-1:0] vi_reg;  // регистр интегратора
++reg signed [W_ACC-1:0] vi_reg;   // регистр интегратора
++reg signed [W_ACC-1:0] vp_s1_d;  // задержанный vp_s1 для ступени 3
++reg                    valid_s2; // валид ступени 3
+ 
+ // Граница насыщения в формате W_ACC с расширением
+ wire signed [W_ACC-1:0] clamp_pos = {{(W_ACC - W_OUT){1'b0}}, clamp_lim};
+@@ -97,28 +107,48 @@ wire signed [W_ACC-1:0] vi_sat;
+ assign vi_sat = (vi_sum > clamp_pos) ? clamp_pos :
+                 (vi_sum < clamp_neg) ? clamp_neg : vi_sum;
+ 
+-// Выход петли: v_pi = vp + vi_sat
+-wire signed [W_ACC-1:0] v_pi_sum = vp_s1 + vi_sat;
++always @(posedge clk or posedge reset) begin
++    if (reset) begin
++        vi_reg   <= 0;
++        vp_s1_d  <= 0;
++        valid_s2 <= 1'b0;
++    end else begin
++        if (valid_s1) begin
++            vi_reg  <= vi_sat;
++            vp_s1_d <= vp_s1;
++        end
++        valid_s2 <= valid_s1;
++    end
++end
++
++// =========================================================================
++// Ступень 3: формирование выхода v_pi
++//   v_pi_sum   = vp_s1_d + vi_reg          (32-bit add, комб.)
++//   v_pi_clp   = saturate(v_pi_sum)        (32-bit compare, комб.)
++//   v_pi_trunc = v_pi_clp[W_OUT-1:0]       (битовое усечение, комб.)
++//   v_pi_out   <= v_pi_trunc               (на posedge clk при valid_s2)
++//
++// Pipeline-вставка добавляет 1 такт латентности (теперь 3 такта от
++// e_valid до v_pi_valid). Это снимает критическую цепь
++// adder→sat→adder→sat одного такта, выявленную при OOC-синтезе.
++// =========================================================================
++wire signed [W_ACC-1:0] v_pi_sum = vp_s1_d + vi_reg;
+ 
+-// Насыщение выхода
+ wire signed [W_ACC-1:0] v_pi_clamped;
+ assign v_pi_clamped = (v_pi_sum > clamp_pos) ? clamp_pos :
+                       (v_pi_sum < clamp_neg) ? clamp_neg : v_pi_sum;
+ 
+-// Усечение до W_OUT бит (берём младшие W_OUT)
+ wire signed [W_OUT-1:0] v_pi_trunc = v_pi_clamped[W_OUT-1:0];
+ 
+ always @(posedge clk or posedge reset) begin
+     if (reset) begin
+-        vi_reg     <= 0;
+         v_pi_out   <= 0;
+         v_pi_valid <= 1'b0;
+     end else begin
+-        if (valid_s1) begin
+-            vi_reg   <= vi_sat;
++        if (valid_s2) begin
+             v_pi_out <= v_pi_trunc;
+         end
+-        v_pi_valid <= valid_s1;
++        v_pi_valid <= valid_s2;
+     end
+ end
+ 
+diff --git a/vkr_sync_hdl/rtl/sync_mod1_nco.v b/vkr_sync_hdl/rtl/sync_mod1_nco.v
+index 462ba4f..ae7b6e6 100644
+--- a/vkr_sync_hdl/rtl/sync_mod1_nco.v
++++ b/vkr_sync_hdl/rtl/sync_mod1_nco.v
+@@ -2,8 +2,10 @@
+ //==========================================================================
+ // Модуль       : sync_mod1_nco
+ // Описание     : Вычитающий счётчик по модулю 1 (Mod-1 NCO)
+-//                μ = CNT_old / W — полноценное деление.
+-//                Для синтеза заменяется на Divider IP или LUT(1/W).
++//                μ ≈ CNT_old · 2 — аппроксимация через битовый сдвиг,
++//                точная при w_step = W_nom = 0,5. Анализ погрешности
++//                в этапе 3.3 дневника ВКР. Архитектурный задел под
++//                Divider IP сохранён в виде закомментированного блока.
+ //
+ // Автор        : Кудимов А.А., ВКР магистра, 2026
+ //==========================================================================
+@@ -33,15 +35,21 @@ wire             underflow = cnt_next[W_EXT-1];
+ wire [W_CNT-1:0] cnt_wrap  = cnt_next[W_CNT-1:0];
+ 
+ // =========================================================================
+-// Полноценное деление μ = CNT_old / W
+-// μ_Q = (CNT_old << W_MU) / w_step
+-// Результат в Q0.W_MU, диапазон [0, 1)
+-//
+-// Для симуляции: поведенческое деление (synthesizable через Divider IP)
++// Аппроксимация дробной задержки μ ≈ CNT_old · 2 через битовый сдвиг.
++// Точна при w_step = W_nom = 0,5 = 0x8000 в Q0.W_CNT.
++// Погрешность в установившемся режиме ≈ 41 LSB СКО при W_MU = 12,
++// что укладывается в шумовой бюджет петли (см. этап 3.3 дневника).
++// Архитектурный задел под полнопрофильное деление через Divider IP
++// или LUT-таблицу 1/W сохранён ниже в виде закомментированного блока.
+ // =========================================================================
+-wire [W_CNT + W_MU - 1:0] cnt_shifted = {cnt_reg, {W_MU{1'b0}}};
+-wire [W_CNT + W_MU - 1:0] mu_full     = (w_step != 0) ? cnt_shifted / w_step : 0;
+-wire [W_MU-1:0]           mu_calc     = mu_full[W_MU-1:0];
++wire [W_MU-1:0] mu_calc = cnt_reg[W_CNT-2 -: W_MU];
++
++// Закомментированный архитектурный задел (для возможного перехода
++// к точному делению через Divider IP при ужесточении требований):
++//   wire [W_CNT + W_MU - 1:0] cnt_shifted = {cnt_reg, {W_MU{1'b0}}};
++//   wire [W_CNT + W_MU - 1:0] mu_full     = (w_step != 0) ?
++//                                           cnt_shifted / w_step : 0;
++//   wire [W_MU-1:0]           mu_calc     = mu_full[W_MU-1:0];
+ 
+ // =========================================================================
+ // Основной автомат
+diff --git a/vkr_sync_hdl/rtl/sync_top.v b/vkr_sync_hdl/rtl/sync_top.v
+index f88a4de..d484ce9 100644
+--- a/vkr_sync_hdl/rtl/sync_top.v
++++ b/vkr_sync_hdl/rtl/sync_top.v
+@@ -148,7 +148,7 @@ assign mu_wire = nco_mu;
+ // =========================================================================
+ reg strobe_d1, strobe_d2;
+ always @(posedge clk or posedge reset) begin
+-    if (rst) begin
++    if (reset) begin
+         strobe_d1 <= 0; strobe_d2 <= 0;
+     end else begin
+         strobe_d1 <= nco_strobe;

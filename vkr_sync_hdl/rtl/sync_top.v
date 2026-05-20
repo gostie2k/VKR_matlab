@@ -141,18 +141,21 @@ sync_mod1_nco #(
 assign mu_wire = nco_mu;
 
 // =========================================================================
-// Задержка strobe на 2 такта (= латентность Фарроу от in_valid до out_valid)
+// Задержка strobe на 3 такта (= латентность Фарроу от in_valid до out_valid)
 // NCO и Farrow получают agc_valid одновременно. NCO выдаёт strobe через
-// 1 такт (registered), Farrow выдаёт XI через 3 такта (3 pipeline stages).
-// Разница: 3 - 1 = 2 такта → strobe_d2 совпадает с farrow_valid.
+// 1 такт (registered), Farrow выдаёт XI через 4 такта (4 pipeline stages
+// после OOC-синтеза этапа 3.12: добавлена ступень между DSP-произведением
+// ступени 3 Горнера и финальным сумматором).
+// Разница: 4 - 1 = 3 такта → strobe_d3 совпадает с farrow_valid.
 // =========================================================================
-reg strobe_d1, strobe_d2;
+reg strobe_d1, strobe_d2, strobe_d3;
 always @(posedge clk or posedge reset) begin
-    if (rst) begin
-        strobe_d1 <= 0; strobe_d2 <= 0;
+    if (reset) begin
+        strobe_d1 <= 0; strobe_d2 <= 0; strobe_d3 <= 0;
     end else begin
         strobe_d1 <= nco_strobe;
         strobe_d2 <= strobe_d1;
+        strobe_d3 <= strobe_d2;
     end
 end
 
@@ -171,7 +174,7 @@ sync_ted_gardner #(
     .in_valid   (farrow_valid),
     .xi_i       (farrow_i),
     .xi_q       (farrow_q),
-    .strobe     (strobe_d2),      // задержанный strobe, выровненный с Farrow
+    .strobe     (strobe_d3),      // задержанный strobe, выровненный с Farrow
     .e_out_valid(ted_valid),
     .e_out      (ted_error)
 );
@@ -202,9 +205,9 @@ sync_loop_filter_pi #(
 assign v_pi_wire = pi_out;
 
 // =========================================================================
-// Выходной поток: символы по стробу (тот же strobe_d2)
+// Выходной поток: символы по стробу (тот же strobe_d3)
 // =========================================================================
-wire sym_valid = farrow_valid & strobe_d2;
+wire sym_valid = farrow_valid & strobe_d3;
 
 assign m_axis_tdata  = {farrow_i, farrow_q};
 assign m_axis_tvalid = sym_valid;

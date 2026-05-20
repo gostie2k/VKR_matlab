@@ -1,0 +1,21 @@
+=== analyse_v3 ===
+symbols: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D7_pipeline_inserts/sync_out_symbols.txt
+internal: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D7_pipeline_inserts/sync_internal.txt
+N_sym total       = 1980
+N_sym steady      = 1780  (trim=200)
+steady_start_clk  = 2985  (clk_max=3980)
+N strobe steady   = 490
+
+MER               = 12.51 dB
+ideal_mag (med|x|)= 20301
+RMS|x|            = 20545
+phase dev std     = 10.02 deg
+Quadrants (±45/±135) [%]:  Q0=26.5  Q1=23.9  Q2=25.1  Q3=24.6
+
+mu_lock mean      = 2488.8   (ratio=0.6076)
+mu_lock std       = 117.3
+debug_w mean      = 32768.8
+debug_w std       = 95.7
+vi_reg  mean      = 1.50
+vi_reg  std       = 7.77
+|e_out| mean      = 3841

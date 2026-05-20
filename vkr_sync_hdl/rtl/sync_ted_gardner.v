@@ -11,7 +11,9 @@
 //                в середину символьного интервала (y_mid), а TEDBuff[1]
 //                (отсчёт с позапрошлого strobe) — это y_prev.
 //
-// Конвейер     : 2 такта от strobe до e_out_valid
+// Конвейер     : 3 такта от strobe до e_out_valid
+//                (после OOC-этапа 3.12 добавлена pipeline-ступень между
+//                 DSP-произведениями и финальным сумматором/насыщением)
 // Ресурсы      : 2 × DSP48E1 (умножения Re·Re и Im·Im), 2 сумматора
 //
 // Автор        : Кудимов А.А., ВКР магистра, 2026
@@ -85,13 +87,37 @@ always @(posedge clk or posedge reset) begin
 end
 
 // =========================================================================
-// Ступень 2: умножения и суммирование
-// e = mid_i · diff_i + mid_q · diff_q
+// Ступень 2: DSP-произведения (без сложения)
+//   prod_i_reg <= mid_s1_i · diff_s1_i
+//   prod_q_reg <= mid_s1_q · diff_s1_q
+// Pipeline-вставка для разрыва цепи DSP→sum→sat→reg одного такта.
 // =========================================================================
-wire signed [W_MULT-1:0] mult_re = mid_s1_i * diff_s1_i;
-wire signed [W_MULT-1:0] mult_im = mid_s1_q * diff_s1_q;
-wire signed [W_MULT:0]   e_full  = $signed({mult_re[W_MULT-1], mult_re}) +
-                                   $signed({mult_im[W_MULT-1], mult_im});
+wire signed [W_MULT-1:0] mult_re_w = mid_s1_i * diff_s1_i;
+wire signed [W_MULT-1:0] mult_im_w = mid_s1_q * diff_s1_q;
+
+reg signed [W_MULT-1:0] prod_i_reg, prod_q_reg;
+reg                     valid_prod;
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        prod_i_reg <= 0;
+        prod_q_reg <= 0;
+        valid_prod <= 1'b0;
+    end else begin
+        if (valid_s1) begin
+            prod_i_reg <= mult_re_w;
+            prod_q_reg <= mult_im_w;
+        end
+        valid_prod <= valid_s1;
+    end
+end
+
+// =========================================================================
+// Ступень 3: суммирование и округлённое насыщающее усечение
+// e = prod_i_reg + prod_q_reg, потом округление и сатурация до W_ERR бит
+// =========================================================================
+wire signed [W_MULT:0] e_full = $signed({prod_i_reg[W_MULT-1], prod_i_reg}) +
+                                $signed({prod_q_reg[W_MULT-1], prod_q_reg});
 
 // Округление и усечение до W_ERR бит
 // Q-формат анализ:
@@ -125,10 +151,10 @@ always @(posedge clk or posedge reset) begin
         e_out       <= 0;
         e_out_valid <= 1'b0;
     end else begin
-        if (valid_s1) begin
+        if (valid_prod) begin
             e_out <= e_rounded;
         end
-        e_out_valid <= valid_s1;
+        e_out_valid <= valid_prod;
     end
 end
 

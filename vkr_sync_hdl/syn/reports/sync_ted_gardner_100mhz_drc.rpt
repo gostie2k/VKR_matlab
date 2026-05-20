@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date         : Tue May 19 21:05:02 2026
+| Date         : Wed May 20 01:30:37 2026
 | Host         : PC105355 running 64-bit Ubuntu 24.04.4 LTS
 | Command      : report_drc -ruledecks default -file syn/reports/sync_ted_gardner_100mhz_drc.rpt
 | Design       : sync_ted_gardner
@@ -29,8 +29,7 @@ Table of Contents
 | Rule   | Severity | Description            | Violations |
 +--------+----------+------------------------+------------+
 | DPIP-1 | Warning  | Input pipelining       | 4          |
-| DPOP-1 | Warning  | PREG Output pipelining | 1          |
-| DPOP-2 | Warning  | MREG Output pipelining | 1          |
+| DPOP-2 | Warning  | MREG Output pipelining | 2          |
 | ZPS7-1 | Warning  | PS7 block required     | 1          |
 +--------+----------+------------------------+------------+
 
@@ -38,32 +37,32 @@ Table of Contents
 -----------------
 DPIP-1#1 Warning
 Input pipelining  
-DSP e_rnd input e_rnd/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP mult_im_w input mult_im_w/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#2 Warning
 Input pipelining  
-DSP e_rnd input e_rnd/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP mult_im_w input mult_im_w/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#3 Warning
 Input pipelining  
-DSP mult_im input mult_im/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP mult_re_w input mult_re_w/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#4 Warning
 Input pipelining  
-DSP mult_im input mult_im/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
-Related violations: <none>
-
-DPOP-1#1 Warning
-PREG Output pipelining  
-DSP e_rnd output e_rnd/P[47:0] is not pipelined (PREG=0). Pipelining the DSP48 output will improve performance and often saves power so it is suggested whenever possible to fully pipeline this function.  If this DSP48 function was inferred, it is suggested to describe an additional register stage after this function.  If the DSP48 was instantiated in the design, it is suggested to set the PREG attribute to 1.
+DSP mult_re_w input mult_re_w/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPOP-2#1 Warning
 MREG Output pipelining  
-DSP e_rnd multiplier stage e_rnd/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+DSP mult_im_w multiplier stage mult_im_w/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
+Related violations: <none>
+
+DPOP-2#2 Warning
+MREG Output pipelining  
+DSP mult_re_w multiplier stage mult_re_w/P[47:0] is not pipelined (MREG=0). Pipelining the multiplier function will improve performance and will save significant power so it is suggested whenever possible to fully pipeline this function.  If this multiplier was inferred, it is suggested to describe an additional register stage after this function.  If there is no registered adder/accumulator following the multiply function, two pipeline stages are suggested to allow both the MREG and PREG registers to be used.  If the DSP48 was instantiated in the design, it is suggested to set both the MREG and PREG attributes to 1 when performing multiply functions.
 Related violations: <none>
 
 ZPS7-1#1 Warning

@@ -1,0 +1,21 @@
+=== analyse_v3 ===
+symbols: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D6_post_synth_fix_ebno60/sync_out_symbols.txt
+internal: /home/t-kudimov/temp/matmodel/vkr_sync_hdl/sim/debug_v3/D6_post_synth_fix_ebno60/sync_internal.txt
+N_sym total       = 1980
+N_sym steady      = 1780  (trim=200)
+steady_start_clk  = 2985  (clk_max=3980)
+N strobe steady   = 489
+
+MER               = 31.97 dB
+ideal_mag (med|x|)= 27252
+RMS|x|            = 27244
+phase dev std     = 1.00 deg
+Quadrants (±45/±135) [%]:  Q0=25.6  Q1=25.3  Q2=25.2  Q3=23.8
+
+mu_lock mean      = 2498.2   (ratio=0.6099)
+mu_lock std       = 36.4
+debug_w mean      = 32765.1
+debug_w std       = 120.2
+vi_reg  mean      = 0.60
+vi_reg  std       = 3.87
+|e_out| mean      = 4536

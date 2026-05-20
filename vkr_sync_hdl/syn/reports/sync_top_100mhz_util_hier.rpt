@@ -1,0 +1,35 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
+| Date         : Wed May 20 01:32:43 2026
+| Host         : PC105355 running 64-bit Ubuntu 24.04.4 LTS
+| Command      : report_utilization -hierarchical -file syn/reports/sync_top_100mhz_util_hier.rpt
+| Design       : sync_top
+| Device       : xc7z020clg484-1
+| Speed File   : -1
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++--------------+---------------------+------------+------------+---------+------+-----+--------+--------+------------+
+|   Instance   |        Module       | Total LUTs | Logic LUTs | LUTRAMs | SRLs | FFs | RAMB36 | RAMB18 | DSP Blocks |
++--------------+---------------------+------------+------------+---------+------+-----+--------+--------+------------+
+| sync_top     |               (top) |        673 |        673 |       0 |    0 | 643 |      0 |      0 |         14 |
+|   (sync_top) |               (top) |          0 |          0 |       0 |    0 |  10 |      0 |      0 |          0 |
+|   u_agc      |            sync_agc |         94 |         94 |       0 |    0 | 100 |      0 |      0 |          4 |
+|   u_farrow   |   sync_farrow_parab |        254 |        254 |       0 |    0 | 288 |      0 |      0 |          6 |
+|   u_nco      |       sync_mod1_nco |         16 |         16 |       0 |    0 |  29 |      0 |      0 |          0 |
+|   u_pi       | sync_loop_filter_pi |        209 |        209 |       0 |    0 |  67 |      0 |      0 |          2 |
+|   u_ted      |    sync_ted_gardner |        100 |        100 |       0 |    0 | 149 |      0 |      0 |          2 |
++--------------+---------------------+------------+------------+---------+------+-----+--------+--------+------------+
+* Note: The sum of lower-level cells may be larger than their parent cells total, due to cross-hierarchy LUT combining
+
+

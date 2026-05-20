@@ -7,7 +7,9 @@
 //                Выход: Kagc = accum[MSB:MSB-15], вход умножается на Kagc.
 //                Режим bypass: при agc_bypass = 1 вход проходит насквозь.
 //
-// Латентность  : 2 такта (умножение |x|² + обновление аккумулятора)
+// Латентность  : 2 такта от in_valid до out_valid (после OOC-этапа 3.12
+//                добавлена pipeline-ступень между квадратами I²/Q² и
+//                накопителем, чтобы разорвать длинную CARRY-цепочку)
 // Ресурсы      : 3 × DSP48E1 (I², Q², I·Kagc/Q·Kagc мультиплексированы)
 //
 // Автор        : Кудимов А.А., ВКР магистра, 2026
@@ -39,13 +41,48 @@ reg [W_ACC-1:0] accum;
 wire [16:0] kagc = accum[W_ACC-1 -: 17];  // старшие 17 бит аккумулятора
 
 // =========================================================================
-// Ступень 1: вычисление мощности и умножение на Kagc
+// Ступень 1: DSP-произведения (без сложения)
+//   sq_i_reg <= in_i · in_i
+//   sq_q_reg <= in_q · in_q
+//   in_*_d   <= in_*   (продвижение входа для умножения на Kagc на ступени 2)
+//   valid_sq <= in_valid
+// Pipeline-вставка между квадратами и финальным сумматором/накопителем
+// для разрыва критической цепи DSP→ADD→ADD→sub→shift→ACCUM одного такта.
 // =========================================================================
-// |x|² = I² + Q² (используем старшие биты для экономии)
-wire signed [2*W_IN-1:0] power_i = in_i * in_i;
-wire signed [2*W_IN-1:0] power_q = in_q * in_q;
-wire signed [2*W_IN:0]   power   = {power_i[2*W_IN-1], power_i} +
-                                    {power_q[2*W_IN-1], power_q};
+wire signed [2*W_IN-1:0] sq_i_w = in_i * in_i;
+wire signed [2*W_IN-1:0] sq_q_w = in_q * in_q;
+
+reg signed [2*W_IN-1:0] sq_i_reg, sq_q_reg;
+reg signed [W_IN-1:0]   in_i_d,   in_q_d;
+reg                     valid_sq;
+reg                     agc_bypass_d;
+
+always @(posedge clk or posedge reset) begin
+    if (reset) begin
+        sq_i_reg     <= 0;
+        sq_q_reg     <= 0;
+        in_i_d       <= 0;
+        in_q_d       <= 0;
+        valid_sq     <= 1'b0;
+        agc_bypass_d <= 1'b0;
+    end else begin
+        if (in_valid) begin
+            sq_i_reg     <= sq_i_w;
+            sq_q_reg     <= sq_q_w;
+            in_i_d       <= in_i;
+            in_q_d       <= in_q;
+            agc_bypass_d <= agc_bypass;
+        end
+        valid_sq <= in_valid;
+    end
+end
+
+// =========================================================================
+// Ступень 2: сумма квадратов, ошибка по мощности, накопление и умножение на Kagc
+// =========================================================================
+// |x|² = I² + Q² (используем зарегистрированные квадраты)
+wire signed [2*W_IN:0] power = {sq_i_reg[2*W_IN-1], sq_i_reg} +
+                                {sq_q_reg[2*W_IN-1], sq_q_reg};
 
 // Разность P_target − |x|², масштабированная >> N_AGC
 wire signed [W_ACC-1:0] power_ext = {{(W_ACC - 2*W_IN - 1){power[2*W_IN]}}, power};
@@ -53,9 +90,9 @@ wire signed [W_ACC-1:0] p_tgt_signed = $signed(p_target);
 wire signed [W_ACC-1:0] error_agc = p_tgt_signed - power_ext;
 wire signed [W_ACC-1:0] error_scaled = error_agc >>> N_AGC;
 
-// Умножение вход × Kagc (16 × 17 бит)
-wire signed [W_IN+16:0] mult_i = in_i * $signed({1'b0, kagc});
-wire signed [W_IN+16:0] mult_q = in_q * $signed({1'b0, kagc});
+// Умножение вход × Kagc (16 × 17 бит) — используем зарегистрированный вход
+wire signed [W_IN+16:0] mult_i = in_i_d * $signed({1'b0, kagc});
+wire signed [W_IN+16:0] mult_q = in_q_d * $signed({1'b0, kagc});
 
 // Насыщающее усечение mult до W_OUT
 localparam W_MG = W_IN + 17;
@@ -79,15 +116,15 @@ always @(posedge clk or posedge reset) begin
         out_valid <= 1'b0;
         out_i     <= 0;
         out_q     <= 0;
-    end else if (in_valid) begin
+    end else if (valid_sq) begin
         // Обновление аккумулятора (только если AGC активна)
-        if (!agc_bypass) begin
+        if (!agc_bypass_d) begin
             accum <= $unsigned($signed(accum) + error_scaled);
         end
-        // Выход: bypass или усиленный
-        if (agc_bypass) begin
-            out_i <= in_i;
-            out_q <= in_q;
+        // Выход: bypass или усиленный (используем зарегистрированный вход)
+        if (agc_bypass_d) begin
+            out_i <= in_i_d;
+            out_q <= in_q_d;
         end else begin
             out_i <= gain_i;
             out_q <= gain_q;

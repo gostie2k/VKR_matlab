@@ -1,0 +1,402 @@
+diff --git a/vkr_sync_hdl/rtl/sync_agc.v b/vkr_sync_hdl/rtl/sync_agc.v
+index aa4e508..a71044e 100644
+--- a/vkr_sync_hdl/rtl/sync_agc.v
++++ b/vkr_sync_hdl/rtl/sync_agc.v
+@@ -7,7 +7,9 @@
+ //                Выход: Kagc = accum[MSB:MSB-15], вход умножается на Kagc.
+ //                Режим bypass: при agc_bypass = 1 вход проходит насквозь.
+ //
+-// Латентность  : 2 такта (умножение |x|² + обновление аккумулятора)
++// Латентность  : 2 такта от in_valid до out_valid (после OOC-этапа 3.12
++//                добавлена pipeline-ступень между квадратами I²/Q² и
++//                накопителем, чтобы разорвать длинную CARRY-цепочку)
+ // Ресурсы      : 3 × DSP48E1 (I², Q², I·Kagc/Q·Kagc мультиплексированы)
+ //
+ // Автор        : Кудимов А.А., ВКР магистра, 2026
+@@ -39,13 +41,48 @@ reg [W_ACC-1:0] accum;
+ wire [16:0] kagc = accum[W_ACC-1 -: 17];  // старшие 17 бит аккумулятора
+ 
+ // =========================================================================
+-// Ступень 1: вычисление мощности и умножение на Kagc
++// Ступень 1: DSP-произведения (без сложения)
++//   sq_i_reg <= in_i · in_i
++//   sq_q_reg <= in_q · in_q
++//   in_*_d   <= in_*   (продвижение входа для умножения на Kagc на ступени 2)
++//   valid_sq <= in_valid
++// Pipeline-вставка между квадратами и финальным сумматором/накопителем
++// для разрыва критической цепи DSP→ADD→ADD→sub→shift→ACCUM одного такта.
+ // =========================================================================
+-// |x|² = I² + Q² (используем старшие биты для экономии)
+-wire signed [2*W_IN-1:0] power_i = in_i * in_i;
+-wire signed [2*W_IN-1:0] power_q = in_q * in_q;
+-wire signed [2*W_IN:0]   power   = {power_i[2*W_IN-1], power_i} +
+-                                    {power_q[2*W_IN-1], power_q};
++wire signed [2*W_IN-1:0] sq_i_w = in_i * in_i;
++wire signed [2*W_IN-1:0] sq_q_w = in_q * in_q;
++
++reg signed [2*W_IN-1:0] sq_i_reg, sq_q_reg;
++reg signed [W_IN-1:0]   in_i_d,   in_q_d;
++reg                     valid_sq;
++reg                     agc_bypass_d;
++
++always @(posedge clk or posedge reset) begin
++    if (reset) begin
++        sq_i_reg     <= 0;
++        sq_q_reg     <= 0;
++        in_i_d       <= 0;
++        in_q_d       <= 0;
++        valid_sq     <= 1'b0;
++        agc_bypass_d <= 1'b0;
++    end else begin
++        if (in_valid) begin
++            sq_i_reg     <= sq_i_w;
++            sq_q_reg     <= sq_q_w;
++            in_i_d       <= in_i;
++            in_q_d       <= in_q;
++            agc_bypass_d <= agc_bypass;
++        end
++        valid_sq <= in_valid;
++    end
++end
++
++// =========================================================================
++// Ступень 2: сумма квадратов, ошибка по мощности, накопление и умножение на Kagc
++// =========================================================================
++// |x|² = I² + Q² (используем зарегистрированные квадраты)
++wire signed [2*W_IN:0] power = {sq_i_reg[2*W_IN-1], sq_i_reg} +
++                                {sq_q_reg[2*W_IN-1], sq_q_reg};
+ 
+ // Разность P_target − |x|², масштабированная >> N_AGC
+ wire signed [W_ACC-1:0] power_ext = {{(W_ACC - 2*W_IN - 1){power[2*W_IN]}}, power};
+@@ -53,9 +90,9 @@ wire signed [W_ACC-1:0] p_tgt_signed = $signed(p_target);
+ wire signed [W_ACC-1:0] error_agc = p_tgt_signed - power_ext;
+ wire signed [W_ACC-1:0] error_scaled = error_agc >>> N_AGC;
+ 
+-// Умножение вход × Kagc (16 × 17 бит)
+-wire signed [W_IN+16:0] mult_i = in_i * $signed({1'b0, kagc});
+-wire signed [W_IN+16:0] mult_q = in_q * $signed({1'b0, kagc});
++// Умножение вход × Kagc (16 × 17 бит) — используем зарегистрированный вход
++wire signed [W_IN+16:0] mult_i = in_i_d * $signed({1'b0, kagc});
++wire signed [W_IN+16:0] mult_q = in_q_d * $signed({1'b0, kagc});
+ 
+ // Насыщающее усечение mult до W_OUT
+ localparam W_MG = W_IN + 17;
+@@ -79,15 +116,15 @@ always @(posedge clk or posedge reset) begin
+         out_valid <= 1'b0;
+         out_i     <= 0;
+         out_q     <= 0;
+-    end else if (in_valid) begin
++    end else if (valid_sq) begin
+         // Обновление аккумулятора (только если AGC активна)
+-        if (!agc_bypass) begin
++        if (!agc_bypass_d) begin
+             accum <= $unsigned($signed(accum) + error_scaled);
+         end
+-        // Выход: bypass или усиленный
+-        if (agc_bypass) begin
+-            out_i <= in_i;
+-            out_q <= in_q;
++        // Выход: bypass или усиленный (используем зарегистрированный вход)
++        if (agc_bypass_d) begin
++            out_i <= in_i_d;
++            out_q <= in_q_d;
+         end else begin
+             out_i <= gain_i;
+             out_q <= gain_q;
+diff --git a/vkr_sync_hdl/rtl/sync_farrow_parab.v b/vkr_sync_hdl/rtl/sync_farrow_parab.v
+index 95c3316..e4a7fec 100644
+--- a/vkr_sync_hdl/rtl/sync_farrow_parab.v
++++ b/vkr_sync_hdl/rtl/sync_farrow_parab.v
+@@ -185,15 +185,44 @@ localparam W_MUL2 = (W_MUL + 1) + W_MUS;
+ wire signed [W_MUL2-1:0] t_mul_mu_i = t_s2_i * mu_s2_sgn;
+ wire signed [W_MUL2-1:0] t_mul_mu_q = t_s2_q * mu_s2_sgn;
+ 
++// -------------------------------------------------------------------------
++// Дополнительная pipeline-ступень между DSP-произведением и сложением
++// с базовой компонентой v0 / округлением / насыщением. Введена для
++// разрыва критической цепи DSP_P → wide_add → round → sat (выявлена при
++// OOC-синтезе этапа 3.12, итерация 3). Латентность Farrow вырастает
++// с 3 до 4 тактов от in_valid до out_valid.
++// -------------------------------------------------------------------------
++reg signed [W_MUL2-1:0] t_mul_mu_i_d, t_mul_mu_q_d;
++reg signed [W_V-1:0]    v0_s2_d_i,    v0_s2_d_q;
++reg                     valid_s2_d;
++
++always @(posedge clk or posedge reset) begin
++    if (reset) begin
++        t_mul_mu_i_d <= 0;
++        t_mul_mu_q_d <= 0;
++        v0_s2_d_i    <= 0;
++        v0_s2_d_q    <= 0;
++        valid_s2_d   <= 1'b0;
++    end else begin
++        if (valid_s2) begin
++            t_mul_mu_i_d <= t_mul_mu_i;
++            t_mul_mu_q_d <= t_mul_mu_q;
++            v0_s2_d_i    <= v0_s2_i;
++            v0_s2_d_q    <= v0_s2_q;
++        end
++        valid_s2_d <= valid_s2;
++    end
++end
++
+ // v0 выравнивается сдвигом влево на 2·W_MU (он был Q(W_V-1).0, нужно .2W_MU)
+-wire signed [W_MUL2-1:0] v0_aligned_i = {{(W_MUS + W_MU){v0_s2_i[W_V-1]}}, v0_s2_i} <<< (2*W_MU);
+-wire signed [W_MUL2-1:0] v0_aligned_q = {{(W_MUS + W_MU){v0_s2_q[W_V-1]}}, v0_s2_q} <<< (2*W_MU);
++wire signed [W_MUL2-1:0] v0_aligned_i = {{(W_MUS + W_MU){v0_s2_d_i[W_V-1]}}, v0_s2_d_i} <<< (2*W_MU);
++wire signed [W_MUL2-1:0] v0_aligned_q = {{(W_MUS + W_MU){v0_s2_d_q[W_V-1]}}, v0_s2_d_q} <<< (2*W_MU);
+ 
+ // Полный результат XI в формате Q.(2·W_MU)
+-wire signed [W_MUL2:0] xi_scaled_i = $signed({t_mul_mu_i[W_MUL2-1], t_mul_mu_i}) +
+-                                     $signed({v0_aligned_i[W_MUL2-1], v0_aligned_i});
+-wire signed [W_MUL2:0] xi_scaled_q = $signed({t_mul_mu_q[W_MUL2-1], t_mul_mu_q}) +
+-                                     $signed({v0_aligned_q[W_MUL2-1], v0_aligned_q});
++wire signed [W_MUL2:0] xi_scaled_i = $signed({t_mul_mu_i_d[W_MUL2-1], t_mul_mu_i_d}) +
++                                     $signed({v0_aligned_i[W_MUL2-1],   v0_aligned_i});
++wire signed [W_MUL2:0] xi_scaled_q = $signed({t_mul_mu_q_d[W_MUL2-1], t_mul_mu_q_d}) +
++                                     $signed({v0_aligned_q[W_MUL2-1],   v0_aligned_q});
+ 
+ // Округление half-up и усечение до W_OUT бит знакового
+ // Q-формат анализ:
+@@ -235,7 +264,7 @@ always @(posedge clk or posedge reset) begin
+         xi_s3_i <= 0; xi_s3_q <= 0;
+         valid_s3 <= 1'b0;
+     end else begin
+-        if (valid_s2) begin
++        if (valid_s2_d) begin
+             // Насыщение при переполнении
+             if (overflow_i)
+                 xi_s3_i <= xi_shifted_i[W_MUL2-SHIFT_OUT] ? SAT_NEG : SAT_POS;
+@@ -247,7 +276,7 @@ always @(posedge clk or posedge reset) begin
+             else
+                 xi_s3_q <= xi_shifted_q[W_OUT-1:0];
+         end
+-        valid_s3 <= valid_s2;
++        valid_s3 <= valid_s2_d;
+     end
+ end
+ 
+diff --git a/vkr_sync_hdl/rtl/sync_loop_filter_pi.v b/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
+index bf6c08e..6ed5971 100644
+--- a/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
++++ b/vkr_sync_hdl/rtl/sync_loop_filter_pi.v
+@@ -13,7 +13,9 @@
+ //                  K1 ≈ −0,0192 → 0xFB12 в Q1.15
+ //                  K2 ≈ −5,13·10⁻⁴ → 0xFFEF в Q1.15
+ //
+-// Конвейер     : 2 такта от e_valid до v_pi_valid
++// Конвейер     : 3 такта от e_valid до v_pi_valid
++//                (ступень 3 добавлена после OOC-синтеза этапа 3.12
++//                 для разрыва критической цепи adder→sat→adder→sat)
+ // Ресурсы      : 2 × DSP48E1, ~100 LUT (насыщение + сумматоры)
+ //
+ // Автор        : Кудимов А.А., ВКР магистра, 2026
+@@ -81,9 +83,17 @@ always @(posedge clk or posedge reset) begin
+ end
+ 
+ // =========================================================================
+-// Ступень 2: обновление интегратора и формирование выхода
++// Ступень 2: обновление интегратора (vi_reg)
++//   vi_sum = vi_reg + k2e_s1      (32-bit add, комб.)
++//   vi_sat = saturate(vi_sum)     (32-bit compare, комб.)
++//   vi_reg <= vi_sat              (на posedge clk при valid_s1)
++//
++// Одновременно проталкиваем vp_s1 → vp_s1_d на один такт вперёд,
++// чтобы на ступени 3 сложить vp_s1_d с обновлённым vi_reg.
+ // =========================================================================
+-reg signed [W_ACC-1:0] vi_reg;  // регистр интегратора
++reg signed [W_ACC-1:0] vi_reg;   // регистр интегратора
++reg signed [W_ACC-1:0] vp_s1_d;  // задержанный vp_s1 для ступени 3
++reg                    valid_s2; // валид ступени 3
+ 
+ // Граница насыщения в формате W_ACC с расширением
+ wire signed [W_ACC-1:0] clamp_pos = {{(W_ACC - W_OUT){1'b0}}, clamp_lim};
+@@ -97,28 +107,48 @@ wire signed [W_ACC-1:0] vi_sat;
+ assign vi_sat = (vi_sum > clamp_pos) ? clamp_pos :
+                 (vi_sum < clamp_neg) ? clamp_neg : vi_sum;
+ 
+-// Выход петли: v_pi = vp + vi_sat
+-wire signed [W_ACC-1:0] v_pi_sum = vp_s1 + vi_sat;
++always @(posedge clk or posedge reset) begin
++    if (reset) begin
++        vi_reg   <= 0;
++        vp_s1_d  <= 0;
++        valid_s2 <= 1'b0;
++    end else begin
++        if (valid_s1) begin
++            vi_reg  <= vi_sat;
++            vp_s1_d <= vp_s1;
++        end
++        valid_s2 <= valid_s1;
++    end
++end
++
++// =========================================================================
++// Ступень 3: формирование выхода v_pi
++//   v_pi_sum   = vp_s1_d + vi_reg          (32-bit add, комб.)
++//   v_pi_clp   = saturate(v_pi_sum)        (32-bit compare, комб.)
++//   v_pi_trunc = v_pi_clp[W_OUT-1:0]       (битовое усечение, комб.)
++//   v_pi_out   <= v_pi_trunc               (на posedge clk при valid_s2)
++//
++// Pipeline-вставка добавляет 1 такт латентности (теперь 3 такта от
++// e_valid до v_pi_valid). Это снимает критическую цепь
++// adder→sat→adder→sat одного такта, выявленную при OOC-синтезе.
++// =========================================================================
++wire signed [W_ACC-1:0] v_pi_sum = vp_s1_d + vi_reg;
+ 
+-// Насыщение выхода
+ wire signed [W_ACC-1:0] v_pi_clamped;
+ assign v_pi_clamped = (v_pi_sum > clamp_pos) ? clamp_pos :
+                       (v_pi_sum < clamp_neg) ? clamp_neg : v_pi_sum;
+ 
+-// Усечение до W_OUT бит (берём младшие W_OUT)
+ wire signed [W_OUT-1:0] v_pi_trunc = v_pi_clamped[W_OUT-1:0];
+ 
+ always @(posedge clk or posedge reset) begin
+     if (reset) begin
+-        vi_reg     <= 0;
+         v_pi_out   <= 0;
+         v_pi_valid <= 1'b0;
+     end else begin
+-        if (valid_s1) begin
+-            vi_reg   <= vi_sat;
++        if (valid_s2) begin
+             v_pi_out <= v_pi_trunc;
+         end
+-        v_pi_valid <= valid_s1;
++        v_pi_valid <= valid_s2;
+     end
+ end
+ 
+diff --git a/vkr_sync_hdl/rtl/sync_mod1_nco.v b/vkr_sync_hdl/rtl/sync_mod1_nco.v
+index 462ba4f..ae7b6e6 100644
+--- a/vkr_sync_hdl/rtl/sync_mod1_nco.v
++++ b/vkr_sync_hdl/rtl/sync_mod1_nco.v
+@@ -2,8 +2,10 @@
+ //==========================================================================
+ // Модуль       : sync_mod1_nco
+ // Описание     : Вычитающий счётчик по модулю 1 (Mod-1 NCO)
+-//                μ = CNT_old / W — полноценное деление.
+-//                Для синтеза заменяется на Divider IP или LUT(1/W).
++//                μ ≈ CNT_old · 2 — аппроксимация через битовый сдвиг,
++//                точная при w_step = W_nom = 0,5. Анализ погрешности
++//                в этапе 3.3 дневника ВКР. Архитектурный задел под
++//                Divider IP сохранён в виде закомментированного блока.
+ //
+ // Автор        : Кудимов А.А., ВКР магистра, 2026
+ //==========================================================================
+@@ -33,15 +35,21 @@ wire             underflow = cnt_next[W_EXT-1];
+ wire [W_CNT-1:0] cnt_wrap  = cnt_next[W_CNT-1:0];
+ 
+ // =========================================================================
+-// Полноценное деление μ = CNT_old / W
+-// μ_Q = (CNT_old << W_MU) / w_step
+-// Результат в Q0.W_MU, диапазон [0, 1)
+-//
+-// Для симуляции: поведенческое деление (synthesizable через Divider IP)
++// Аппроксимация дробной задержки μ ≈ CNT_old · 2 через битовый сдвиг.
++// Точна при w_step = W_nom = 0,5 = 0x8000 в Q0.W_CNT.
++// Погрешность в установившемся режиме ≈ 41 LSB СКО при W_MU = 12,
++// что укладывается в шумовой бюджет петли (см. этап 3.3 дневника).
++// Архитектурный задел под полнопрофильное деление через Divider IP
++// или LUT-таблицу 1/W сохранён ниже в виде закомментированного блока.
+ // =========================================================================
+-wire [W_CNT + W_MU - 1:0] cnt_shifted = {cnt_reg, {W_MU{1'b0}}};
+-wire [W_CNT + W_MU - 1:0] mu_full     = (w_step != 0) ? cnt_shifted / w_step : 0;
+-wire [W_MU-1:0]           mu_calc     = mu_full[W_MU-1:0];
++wire [W_MU-1:0] mu_calc = cnt_reg[W_CNT-2 -: W_MU];
++
++// Закомментированный архитектурный задел (для возможного перехода
++// к точному делению через Divider IP при ужесточении требований):
++//   wire [W_CNT + W_MU - 1:0] cnt_shifted = {cnt_reg, {W_MU{1'b0}}};
++//   wire [W_CNT + W_MU - 1:0] mu_full     = (w_step != 0) ?
++//                                           cnt_shifted / w_step : 0;
++//   wire [W_MU-1:0]           mu_calc     = mu_full[W_MU-1:0];
+ 
+ // =========================================================================
+ // Основной автомат
+diff --git a/vkr_sync_hdl/rtl/sync_ted_gardner.v b/vkr_sync_hdl/rtl/sync_ted_gardner.v
+index 78da824..7edf17c 100644
+--- a/vkr_sync_hdl/rtl/sync_ted_gardner.v
++++ b/vkr_sync_hdl/rtl/sync_ted_gardner.v
+@@ -11,7 +11,9 @@
+ //                в середину символьного интервала (y_mid), а TEDBuff[1]
+ //                (отсчёт с позапрошлого strobe) — это y_prev.
+ //
+-// Конвейер     : 2 такта от strobe до e_out_valid
++// Конвейер     : 3 такта от strobe до e_out_valid
++//                (после OOC-этапа 3.12 добавлена pipeline-ступень между
++//                 DSP-произведениями и финальным сумматором/насыщением)
+ // Ресурсы      : 2 × DSP48E1 (умножения Re·Re и Im·Im), 2 сумматора
+ //
+ // Автор        : Кудимов А.А., ВКР магистра, 2026
+@@ -85,13 +87,37 @@ always @(posedge clk or posedge reset) begin
+ end
+ 
+ // =========================================================================
+-// Ступень 2: умножения и суммирование
+-// e = mid_i · diff_i + mid_q · diff_q
++// Ступень 2: DSP-произведения (без сложения)
++//   prod_i_reg <= mid_s1_i · diff_s1_i
++//   prod_q_reg <= mid_s1_q · diff_s1_q
++// Pipeline-вставка для разрыва цепи DSP→sum→sat→reg одного такта.
+ // =========================================================================
+-wire signed [W_MULT-1:0] mult_re = mid_s1_i * diff_s1_i;
+-wire signed [W_MULT-1:0] mult_im = mid_s1_q * diff_s1_q;
+-wire signed [W_MULT:0]   e_full  = $signed({mult_re[W_MULT-1], mult_re}) +
+-                                   $signed({mult_im[W_MULT-1], mult_im});
++wire signed [W_MULT-1:0] mult_re_w = mid_s1_i * diff_s1_i;
++wire signed [W_MULT-1:0] mult_im_w = mid_s1_q * diff_s1_q;
++
++reg signed [W_MULT-1:0] prod_i_reg, prod_q_reg;
++reg                     valid_prod;
++
++always @(posedge clk or posedge reset) begin
++    if (reset) begin
++        prod_i_reg <= 0;
++        prod_q_reg <= 0;
++        valid_prod <= 1'b0;
++    end else begin
++        if (valid_s1) begin
++            prod_i_reg <= mult_re_w;
++            prod_q_reg <= mult_im_w;
++        end
++        valid_prod <= valid_s1;
++    end
++end
++
++// =========================================================================
++// Ступень 3: суммирование и округлённое насыщающее усечение
++// e = prod_i_reg + prod_q_reg, потом округление и сатурация до W_ERR бит
++// =========================================================================
++wire signed [W_MULT:0] e_full = $signed({prod_i_reg[W_MULT-1], prod_i_reg}) +
++                                $signed({prod_q_reg[W_MULT-1], prod_q_reg});
+ 
+ // Округление и усечение до W_ERR бит
+ // Q-формат анализ:
+@@ -125,10 +151,10 @@ always @(posedge clk or posedge reset) begin
+         e_out       <= 0;
+         e_out_valid <= 1'b0;
+     end else begin
+-        if (valid_s1) begin
++        if (valid_prod) begin
+             e_out <= e_rounded;
+         end
+-        e_out_valid <= valid_s1;
++        e_out_valid <= valid_prod;
+     end
+ end
+ 
+diff --git a/vkr_sync_hdl/rtl/sync_top.v b/vkr_sync_hdl/rtl/sync_top.v
+index f88a4de..d484ce9 100644
+--- a/vkr_sync_hdl/rtl/sync_top.v
++++ b/vkr_sync_hdl/rtl/sync_top.v
+@@ -148,7 +148,7 @@ assign mu_wire = nco_mu;
+ // =========================================================================
+ reg strobe_d1, strobe_d2;
+ always @(posedge clk or posedge reset) begin
+-    if (rst) begin
++    if (reset) begin
+         strobe_d1 <= 0; strobe_d2 <= 0;
+     end else begin
+         strobe_d1 <= nco_strobe;

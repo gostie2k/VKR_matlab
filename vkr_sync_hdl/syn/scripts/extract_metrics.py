@@ -113,7 +113,7 @@ def parse_worst_path(path):
         return out
     # Первый блок Slack ... Source ... Destination ... Data Path Delay
     m = re.search(
-        r"Slack\s*\(.*?\):\s*([-\d.]+)ns.*?"
+        r"Slack\s*\(.*?\)\s*:\s*([-\d.]+)ns.*?"
         r"Source:\s*([^\n]+).*?"
         r"Destination:\s*([^\n]+).*?"
         r"Data Path Delay:\s*([\d.]+)ns.*?"
